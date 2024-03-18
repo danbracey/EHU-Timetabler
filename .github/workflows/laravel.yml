@@ -33,10 +33,16 @@ jobs:
     - name: Clean Install (npm)
       run: |
         npm ci
-    - name: Run Database Migrations
+    - name: Migrate Database
+      env:
+        DB_CONNECTION: sqlite
+        DB_DATABASE: database/database.sqlite
       run: |
         php artisan migrate
-    - name: Run Database Migrations
+    - name: Seed Database
+      env:
+        DB_CONNECTION: sqlite
+        DB_DATABASE: database/database.sqlite
       run: |
         php artisan db:seed
     - name: Execute tests (Unit and Feature tests) via Artisan
