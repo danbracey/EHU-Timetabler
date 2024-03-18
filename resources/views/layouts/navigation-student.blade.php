@@ -5,7 +5,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}" class="font-copse text-2xl">
+                    <a href="/" class="font-copse text-2xl">
                         EHU Timetabler
                     </a>
                 </div>
