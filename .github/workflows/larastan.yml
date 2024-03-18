@@ -1,0 +1,28 @@
+name: Laravel
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "*" ]
+
+jobs:
+  laravel-tests:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: shivammathur/setup-php@48e0de2ea6fe020804fef2c54f7730e83c24e30d
+      with:
+        php-version: '8.2'
+        extensions: sqlite
+    - uses: actions/checkout@v3
+    - name: Update composer
+      run: composer update
+    - name: Install Dependencies
+      run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+    - name: Clean Install (npm)
+      run: |
+        npm ci
+    - name: Run PHPStan / Larastan code analysis
+      run: ./vendor/bin/phpstan analyse

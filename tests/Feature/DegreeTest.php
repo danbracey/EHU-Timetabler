@@ -1,5 +1,5 @@
 <?php
-namespace Feature;
+namespace Tests\Feature;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -8,6 +8,7 @@ use Tests\TestCase;
 class DegreeTest extends TestCase
 {
     use RefreshDatabase;
+    private User $user;
 
     protected function setUp(): void
     {
