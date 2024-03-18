@@ -13,6 +13,10 @@ export default {
         extend: {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                copse: ['Copse']
+            },
+            colors: {
+                'ehu-blue': '#5274BD',
             },
         },
     },
