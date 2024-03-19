@@ -18,7 +18,7 @@ class DegreeFactory extends Factory
     public function definition(): array
     {
         return [
-            'id' => Str::random(1) . rand(0,9) . Str::random(1) . rand(0,9),
+            'id' => Str::random(1) . rand(0, 9) . Str::random(1) . rand(0, 9),
             'friendly_name' => Str::random(10)
         ];
     }

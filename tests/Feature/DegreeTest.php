@@ -21,13 +21,13 @@ class DegreeTest extends TestCase
 
     public function test_degree_screen_cannot_be_accessed_by_unauthenticated_users(): void
     {
-        $response = $this->get('/degrees');
+        $response = $this->get(route('degree.index'));
         $response->assertRedirect();
     }
 
     public function test_degrees_index_screen_can_be_rendered_by_staff(): void
     {
-        $response = $this->actingAs($this->user)->get('/degrees');
+        $response = $this->actingAs($this->user)->get(route('degree.index'));
         $response->assertStatus(200);
     }
 
