@@ -3,12 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Contracts\Database\Eloquent;
 use Illuminate\Database\Eloquent\Model;
 
-/**
- * @mixin Eloquent\
- */
 class Degree extends Model
 {
     use HasFactory;
