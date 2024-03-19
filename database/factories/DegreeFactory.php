@@ -2,11 +2,12 @@
 
 namespace Database\Factories;
 
+use App\Models\Degree;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
+ * @extends Factory<Degree>
  */
 class DegreeFactory extends Factory
 {

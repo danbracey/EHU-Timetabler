@@ -13,7 +13,7 @@ class DegreeController extends Controller
      */
     public function index(): View
     {
-        return view('degrees.index', [
+        return view('degree.index', [
             'Degrees' => Degree::all()
         ]);
     }
@@ -21,9 +21,9 @@ class DegreeController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): View
     {
-        //
+        return view('degree.create');
     }
 
     /**
