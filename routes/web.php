@@ -19,4 +19,4 @@ Route::middleware('auth')->group(function () {
 
 Route::resource('/degree', \App\Http\Controllers\DegreeController::class)->middleware('auth');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
