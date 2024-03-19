@@ -2,13 +2,15 @@
 namespace Tests\Feature;
 
 use App\Models\User;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
+
 class DegreeTest extends TestCase
 {
-    use RefreshDatabase;
     private User $user;
+    use RefreshDatabase;
 
     protected function setUp(): void
     {
@@ -27,7 +29,7 @@ class DegreeTest extends TestCase
 
     public function test_degrees_index_screen_can_be_rendered_by_staff(): void
     {
-        $response = $this->actingAs($this->user)->get(route('degree.index'));
+        $response = $this->actingAs($this->user)->get('/degree/');
         $response->assertStatus(200);
     }
 
@@ -45,11 +47,11 @@ class DegreeTest extends TestCase
 
     public function test_degree_can_be_created(): void
     {
-        $response = $this->actingAs($this->user)->post('/degree/create', [
+        $response = $this->actingAs($this->user)->post(route('degree.store'), [
             'id' => 'WD47',
             'friendly_name' => 'Web Design & Development'
         ]);
 
-        $response->assertStatus(201);
+        $response->assertRedirect();
     }
 }
