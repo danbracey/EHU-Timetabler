@@ -3,10 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Contracts\Database\Eloquent;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- *
+ * @mixin Eloquent\
  */
 class Degree extends Model
 {
@@ -22,7 +23,6 @@ class Degree extends Model
      * @var string
      */
     private string $friendly_name;
-
     /**
      * Returns relation of modules that exist on this degree
      * @return void
