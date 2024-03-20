@@ -7,19 +7,19 @@ export default {
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
-    ],
+        ],
 
-    theme: {
-        extend: {
-            fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
-                copse: ['Copse']
+        theme: {
+            extend: {
+                fontFamily: {
+                    sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                    copse: ['Copse']
+                },
+                colors: {
+                    'ehu-blue': '#5274BD',
+                },
             },
-            colors: {
-                'ehu-blue': '#5274BD',
-            },
-        },
     },
 
     plugins: [forms],
-};
+    };

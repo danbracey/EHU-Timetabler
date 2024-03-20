@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StudentRequest;
+use App\Models\Degree;
 use App\Models\Student;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 class StudentController extends Controller
@@ -25,7 +28,9 @@ class StudentController extends Controller
      */
     public function create(): View
     {
-        return view('student.create');
+        return view('student.create', [
+            'Degrees' => Degree::all()
+        ]);
     }
 
     /**
@@ -36,6 +41,7 @@ class StudentController extends Controller
         $validated = $request->validated();
 
         $student = new Student();
+        $student->setAttribute('id', $validated['id']);
         $student->setAttribute('first_name', $validated['first_name']);
         $student->setAttribute('last_name', $validated['last_name']);
         $student->setAttribute('degree_id', $validated['degree']);
@@ -59,8 +65,9 @@ class StudentController extends Controller
      */
     public function edit(string $id): View
     {
-        return view('degree.edit', [
-            'Student' => Student::where('id', '=', $id)->firstOrFail()
+        return view('student.edit', [
+            'Student' => Student::where('id', '=', $id)->firstOrFail(),
+            'Degrees' => Degree::all()
         ]);
     }
 
@@ -69,15 +76,22 @@ class StudentController extends Controller
      */
     public function update(StudentRequest $request, string $id): RedirectResponse
     {
+        Validator::make((array)$request, [
+            'id' => [
+                Rule::unique('students')->ignore($id),
+            ],
+        ]);
+
         $validated = $request->validated();
 
         $student = Student::where('id', '=', $id)->firstOrFail();
+        $student->setAttribute('id', $validated['id']);
         $student->setAttribute('first_name', $validated['first_name']);
         $student->setAttribute('last_name', $validated['last_name']);
         $student->setAttribute('degree_id', $validated['degree']);
         $student->update();
 
-        return redirect(route('degree.show', $validated['id']));
+        return redirect(route('student.show', $validated['id']));
     }
 
     /**

@@ -2,8 +2,11 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Student;
+use App\Models\User;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StudentRequest extends FormRequest
 {
@@ -23,7 +26,7 @@ class StudentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'numeric|digits:8|unique:students,id',
+            'id' => ['numeric', 'digits:8'],
             'first_name' => 'string|max:30',
             'last_name' => 'string|max:30',
             'degree' => 'string|exists:degrees,id'

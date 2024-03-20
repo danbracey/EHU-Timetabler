@@ -5,7 +5,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}" class="font-copse text-2xl">
+                    <a href="{{ route('dashboard') }}" class="font-copse text-2xl text-white">
                         EHU Timetabler
                     </a>
                 </div>
@@ -17,6 +17,9 @@
                     </x-nav-link>
                     <x-nav-link :href="route('degree.index')" :active="request()->routeIs('degree.index')">
                         {{ __('Degrees') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('student.index')" :active="request()->routeIs('student.index')">
+                        {{ __('Students') }}
                     </x-nav-link>
                 </div>
             </div>

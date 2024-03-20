@@ -1,4 +1,11 @@
 @tailwind base;
+
+@layer base {
+    a {
+        @apply text-ehu-blue;
+    }
+}
+
 @tailwind components;
 @tailwind utilities;
 
@@ -28,3 +35,7 @@
     font-weight: 400;
     font-style: normal;
 }
+
+/*a {*/
+/*    color: #5274BD;*/
+/*}*/
