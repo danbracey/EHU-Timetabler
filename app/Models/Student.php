@@ -15,11 +15,11 @@ class Student extends Model
     private int $id;
     private string $first_name;
     private string $last_name;
-    private string $degree;
+    private string $degree_id;
 
     public function getDegree(): HasOne
     {
-        return $this->hasOne(Degree::class, 'id', 'degree');
+        return $this->hasOne(Degree::class, 'id', 'degree_id');
     }
 
     public function getStudentModules()

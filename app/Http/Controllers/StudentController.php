@@ -38,7 +38,7 @@ class StudentController extends Controller
         $student = new Student();
         $student->setAttribute('first_name', $validated['first_name']);
         $student->setAttribute('last_name', $validated['last_name']);
-        $student->setAttribute('degree', $validated['degree']);
+        $student->setAttribute('degree_id', $validated['degree']);
         $student->save();
 
         return redirect(route('student.show', $validated['id']));
@@ -74,7 +74,7 @@ class StudentController extends Controller
         $student = Student::where('id', '=', $id)->firstOrFail();
         $student->setAttribute('first_name', $validated['first_name']);
         $student->setAttribute('last_name', $validated['last_name']);
-        $student->setAttribute('degree', $validated['degree']);
+        $student->setAttribute('degree_id', $validated['degree']);
         $student->update();
 
         return redirect(route('degree.show', $validated['id']));
