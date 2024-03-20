@@ -3,9 +3,12 @@
 namespace Tests\Feature;
 
 use App\Models\Degree;
+use App\Models\Student;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Artisan;
+use JsonException;
 use Tests\TestCase;
 
 class StudentTest extends TestCase
@@ -20,6 +23,9 @@ class StudentTest extends TestCase
 
         //Set up an authenticated user
         $this->user = User::factory()->create();
+
+        /** Create random degree so student can be attached to the newly created degree */
+        Degree::factory()->createOne();
     }
 
     /**
@@ -59,20 +65,20 @@ class StudentTest extends TestCase
     public function test_student_can_be_created(): void
     {
         $Degree = Degree::factory()->createOne();
-        $response = $this->actingAs($this->user)->post(route('student.create'), [
+        $response = $this->actingAs($this->user)->post(route('student.store'), [
+            'id' => rand(10000000, 99999999),
             'first_name' => 'John',
             'last_name' => 'Doe',
             'degree' => $Degree->__get('id')
         ]);
 
-        $response->assertCreated();
         $response->assertRedirect();
     }
 
     public function test_student_can_be_read(): void
     {
         $student = Student::factory()->createOne();
-        $response = $this->actingAs($this->user)->post(route('student.view', $student->id));
+        $response = $this->actingAs($this->user)->get(route('student.show', $student->id));
         $response->assertStatus(200);
     }
 
@@ -84,27 +90,42 @@ class StudentTest extends TestCase
         $response->assertStatus(200);
     }
 
+    /**
+     * @throws JsonException
+     */
     public function test_student_can_be_updated(): void
     {
-        $student = Student::factory()->createOne();
+        // Create a random degree
+        $degree = Degree::factory()->create();
 
-        $response = $this->actingAs($this->user)->patch(route('degree.update', $student->__get('id')), [
+        // Create a student
+        $student = Student::factory()->create();
+
+        // Update the student
+        $response = $this->actingAs($this->user)->put('/student/' . $student->__get('id'), [
+            'id' => $student->__get('id'),
             'first_name' => 'Jane',
-            'last_name' => 'Seymour'
+            'last_name' => 'Seymour',
+            'degree' => $degree->__get('id')
         ]);
 
-        $findStudent = Student::where('id', '=', 'W000')->firstOrFail();
-        $this->assertEquals('Jane', $findStudent->first_name);
-        $this->assertEquals('Seymour', $findStudent->first_name);
-
+        // Assert the response
+        $response->assertSessionHasNoErrors();
         $response->assertRedirect();
+
+        // Refresh the student model instance to get updated data from the database
+        $student->refresh();
+
+        // Assert against the updated values
+        $this->assertSame('Jane', $student->__get('first_name'));
+        $this->assertSame('Seymour', $student->__get('last_name'));
+        $this->assertSame($degree->__get('id'), $student->__get('degree_id'));
     }
 
     public function test_student_can_be_deleted(): void
     {
         $student = Student::factory()->createOne();
-
-        $response = $this->actingAs($this->user)->delete(route('degree.destroy', $student->__get('id')));
+        $response = $this->actingAs($this->user)->delete(route('student.destroy', $student->__get('id')));
         $this->assertDatabaseMissing('students', [
             'id' => $student->__get('id'),
         ]);
