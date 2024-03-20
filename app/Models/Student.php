@@ -15,6 +15,7 @@ class Student extends Model
     private int $id;
     private string $first_name;
     private string $last_name;
+    private string $degree;
 
     public function getDegree(): HasOne
     {
