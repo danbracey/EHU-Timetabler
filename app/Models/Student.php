@@ -10,6 +10,8 @@ class Student extends Model
 {
     use HasFactory;
 
+    public $incrementing = false;
+
     private int $id;
     private string $first_name;
     private string $last_name;

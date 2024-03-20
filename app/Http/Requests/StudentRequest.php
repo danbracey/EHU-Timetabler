@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StudentRequest extends FormRequest
@@ -11,18 +12,21 @@ class StudentRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true; //Route auth middleware overrides this
     }
 
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array<string, ValidationRule|array|string>
      */
     public function rules(): array
     {
         return [
-            //
+            'id' => 'numeric|digits:8|unique:students,id',
+            'first_name' => 'string|max:30',
+            'last_name' => 'string|max:30',
+            'degree' => 'string|exists:degrees,id'
         ];
     }
 }
