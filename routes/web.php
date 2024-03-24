@@ -1,15 +1,19 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Models\Student;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/{student}', function () {
-    return view('timetable');
+Route::get('/{student}', function (Student $student) {
+    return view('welcome', [
+        'student' => $student
+    ]);
 });
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
