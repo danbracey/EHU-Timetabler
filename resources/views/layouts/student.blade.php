@@ -27,10 +27,13 @@
         </header>
     @endif
 
-    <!-- Page Content -->
-    <main>
-        {{ $slot }}
-    </main>
+    <div>
+
+{{--        <x-text-input wire:key="student" wire:model.live="student" class="w-full sm:w-1/3 lg:w-2/3 text-black block m-auto border-ehu-pink border-4" digits="8" type="text" placeholder="Enter your student ID!..."></x-text-input>--}}
+<input type="text" wire:mode.live="student">
+
+    <livewire:get-student-details />
+    </div>
 </div>
 </body>
 </html>

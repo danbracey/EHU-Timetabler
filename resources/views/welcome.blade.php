@@ -1,15 +1,7 @@
 <x-student-layout>
     <x-slot name="header">
-        {{ __('Dashboard') }}
+        Welcome {{ __('John') }} {{ __('Doe') }}!
     </x-slot>
 
-    <div>
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-
-                </div>
-            </div>
-        </div>
-    </div>
+    <livewire:get-student-details />
 </x-student-layout>
