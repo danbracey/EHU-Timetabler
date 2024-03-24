@@ -17,6 +17,7 @@ export default {
                 },
                 colors: {
                     'ehu-blue': '#5274BD',
+                    'ehu-pink': '#E94968'
                 },
             },
     },
