@@ -6,6 +6,7 @@ use App\Models\Degree;
 use App\Models\Student;
 use Exception;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\DB;
 
 /**
  * @extends Factory<Student>
@@ -20,6 +21,10 @@ class StudentFactory extends Factory
      */
     public function definition(): array
     {
+        if (!DB::table('degrees')->first()) {
+            Degree::factory()->createOne();
+        }
+
         return [
             'id' => rand(10000000, 99999999),
             'first_name' => fake()->firstName(),

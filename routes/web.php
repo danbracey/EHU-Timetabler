@@ -1,19 +1,10 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
-use App\Models\Student;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/{student}', function (Student $student) {
-    return view('welcome', [
-        'student' => $student
-    ]);
-});
-
+Route::get('/', [HomeController::class, 'index'])->name('index');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
