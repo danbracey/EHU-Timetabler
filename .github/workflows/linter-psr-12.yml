@@ -1,4 +1,4 @@
-name: Laravel
+name: PHP CodeSniffer (PSR-12)
 
 on:
   push:

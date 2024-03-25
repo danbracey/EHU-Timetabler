@@ -18,5 +18,6 @@ Route::middleware('auth')->group(function () {
 
 Route::resource('/degree', \App\Http\Controllers\DegreeController::class)->middleware('auth');
 Route::resource('/student', \App\Http\Controllers\StudentController::class)->middleware('auth');
+Route::resource('/module', \App\Http\Controllers\ModuleController::class)->middleware('auth');
 
 require __DIR__ . '/auth.php';
