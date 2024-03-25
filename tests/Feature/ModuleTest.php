@@ -23,7 +23,7 @@ class ModuleTest extends TestCase
     }
 
     /**
-     * Test that the student index page cannot be rendered by guests
+     * Test that the module index page cannot be rendered by guests
      * @return void
      */
     public function test_modules_page_cannot_be_accessed_by_guests(): void
@@ -33,7 +33,7 @@ class ModuleTest extends TestCase
     }
 
     /**
-     * Test that the student index page can be rendered by staff
+     * Test that the module index page can be rendered by staff
      * @return void
      */
     public function test_modules_page_can_be_accessed_by_staff(): void
@@ -43,7 +43,7 @@ class ModuleTest extends TestCase
     }
 
     /**
-     * Test student creation page can be rendered with form components
+     * Test module creation page can be rendered with form components
      * @return void
      */
     public function test_module_creation_page_can_be_rendered(): void
@@ -53,7 +53,7 @@ class ModuleTest extends TestCase
     }
 
     /**
-     * Test student creation page can be created
+     * Test module creation page can be created
      * @return void
      */
     public function test_module_can_be_created(): void
@@ -91,20 +91,23 @@ class ModuleTest extends TestCase
         $module = Module::factory()->create();
 
         // Update the student
-        $response = $this->actingAs($this->user)->put('/student/' . $module->__get('id'), [
+        $response = $this->actingAs($this->user)->put(route('module.update', $module->__get('id')), [
             'id' => $module->__get('id'),
             'friendly_name' => 'Different Module',
+            'academic_year' => '23/24',
+            'degrees' => []
         ]);
 
         // Assert the response
         $response->assertSessionHasNoErrors();
         $response->assertRedirect();
 
-        // Refresh the student model instance to get updated data from the database
+        // Refresh the module model instance to get updated data from the database
         $module->refresh();
 
         // Assert against the updated values
         $this->assertSame('Different Module', $module->__get('friendly_name'));
+        $this->assertSame('23/24', $module->__get('academic_year'));
     }
 
     public function test_module_can_be_deleted(): void
