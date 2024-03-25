@@ -22,7 +22,7 @@ class Degree extends Model
     private string $friendly_name;
     /**
      * Returns relation of modules that exist on this degree
-     * @return void
+     * @return BelongsToMany
      */
     public function modules(): BelongsToMany
     {
