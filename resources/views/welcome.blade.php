@@ -1,15 +1,7 @@
 <x-student-layout>
-    <x-slot name="header">
-        {{ __('Dashboard') }}
-    </x-slot>
-
-    <div>
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-
-                </div>
-            </div>
-        </div>
-    </div>
+    <form class="h-screen flex items-center justify-center mx-20" method="get">
+        <x-text-input placeholder="Enter your student ID" class="w-full border-ehu-pink border-4" id="student_id" name="student_id"></x-text-input>
+        <button type="submit" class="btn-primary block">Find my timetable</button>
+        <x-input-error :messages="$errors->first()" class="mt-2" />
+    </form>
 </x-student-layout>
