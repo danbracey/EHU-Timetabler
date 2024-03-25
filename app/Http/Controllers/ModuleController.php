@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ModuleRequest;
 use App\Models\Degree;
+use App\Models\Module;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -85,6 +87,7 @@ class ModuleController extends Controller
         $module->setAttribute('id', $validated['id']);
         $module->setAttribute('friendly_name', $validated['friendly_name']);
         $module->setAttribute('academic_year', $validated['academic_year']);
+        $module->degrees()->sync($validated['degrees']);
         $module->update();
 
         return redirect(route('module.show', $validated['id']));

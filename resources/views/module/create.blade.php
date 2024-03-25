@@ -6,14 +6,15 @@
                 <!-- ID -->
                 <div>
                     <x-input-label for="id" :value="__('Module ID')" />
-                    <x-text-input id="id" class="block mt-1 w-full" type="text" name="id" value="{{old('id')}}" required autofocus autocomplete="off" />
+                    <p>Do not include CIS</p>
+                    <x-text-input id="id" class="block mt-1 w-full" type="number" name="id" value="{{old('id')}}" required autofocus autocomplete="off" />
                     <x-input-error :messages="$errors->get('id')" class="mt-2" />
                 </div>
 
                 <!-- Friendly name -->
                 <div>
                     <x-input-label for="friendly_name" :value="__('Friendly name')" />
-                    <x-text-input id="friendly_name" class="block mt-1 w-full" type="text" name="first_name" value="{{old('friendly_name')}}" required autofocus autocomplete="off" />
+                    <x-text-input id="friendly_name" class="block mt-1 w-full" type="text" name="friendly_name" value="{{old('friendly_name')}}" required autofocus autocomplete="off" />
                     <x-input-error :messages="$errors->get('friendly_name')" class="mt-2" />
                 </div>
 

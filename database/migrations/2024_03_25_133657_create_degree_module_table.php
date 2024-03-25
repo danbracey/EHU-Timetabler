@@ -16,8 +16,11 @@ return new class extends Migration
     {
         Schema::create('degree_module', function (Blueprint $table) {
             $table->string('degree_id');
-            $table->string('module_id');
+            $table->integer('module_id');
             $table->timestamps();
+
+            //Create composite key
+            $table->primary(['degree_id', 'module_id']);
 
             //Create pivot table relationships
             $table->foreign('degree_id')->references('id')->on('degrees');
