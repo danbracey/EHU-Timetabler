@@ -16,9 +16,13 @@ class ModuleFactory extends Factory
      */
     public function definition(): array
     {
+        //Generate academic year
+        $academicYear = rand(20, 29);
+
         return [
             'id' => rand(1000, 3999),
             'friendly_name' => fake()->realText(),
+            'academic_year' => $academicYear . '/' . $academicYear + 1
         ];
     }
 }

@@ -70,7 +70,7 @@ class ModuleTest extends TestCase
     public function test_module_can_be_read(): void
     {
         $module = Module::factory()->createOne();
-        $response = $this->actingAs($this->user)->get(route('module.show', $module->id));
+        $response = $this->actingAs($this->user)->get(route('module.show', $module->__get('id')));
         $response->assertStatus(200);
     }
 
