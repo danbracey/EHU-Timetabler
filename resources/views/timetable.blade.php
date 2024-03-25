@@ -2,9 +2,5 @@
     <x-slot name="header">
         Welcome {{$Student->first_name}} {{$Student->last_name}}!
     </x-slot>
-    <p>Your degree: {{$Student->getDegree->name}}</p>
-
-    <section class="h-screen flex items-center justify-center mx-20">
-        <x-text-input placeholder="Enter your student ID" class="w-full border-ehu-pink border-4" value="{{$Student->id}}"></x-text-input>
-    </section>
+    <p class="font-copse max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">Your degree: {{$Student->getDegree->friendly_name}} ({{$Student->getDegree->id}})</p>
 </x-student-layout>
