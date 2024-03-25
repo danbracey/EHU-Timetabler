@@ -98,7 +98,9 @@ class ModuleController extends Controller
      */
     public function destroy(string $id)
     {
-        Module::where('id', '=', $id)->delete();
+        $module = Module::find($id);
+        $module->degrees()->detach();
+        $module->delete();
         return redirect(route('module.index'));
     }
 }
