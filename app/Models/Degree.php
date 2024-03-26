@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Degree extends Model
 {
@@ -21,11 +22,11 @@ class Degree extends Model
     private string $friendly_name;
     /**
      * Returns relation of modules that exist on this degree
-     * @return void
+     * @return BelongsToMany
      */
-    public function getModules()
+    public function modules(): BelongsToMany
     {
-        //Relation goes here
+        return $this->belongsToMany(Module::class, 'degree_module', 'degree_id', 'module_id');
     }
 
     /**

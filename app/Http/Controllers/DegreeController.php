@@ -83,7 +83,9 @@ class DegreeController extends Controller
      */
     public function destroy(string $id): RedirectResponse
     {
-        Degree::where('id', '=', $id)->delete();
+        $degree = Degree::find($id);
+        $degree->modules()->detach();
+        $degree->delete();
         return redirect(route('degree.index'));
 
         //TODO: Call service to automatically regen timetable
