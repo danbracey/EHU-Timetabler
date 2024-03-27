@@ -15,7 +15,7 @@ class BuildingController extends Controller
      */
     public function index(): View
     {
-        return view('building.index', [
+        return view('estates.building.index', [
             'Buildings' => Building::all()
         ]);
     }
@@ -25,7 +25,7 @@ class BuildingController extends Controller
      */
     public function create(): View
     {
-        return view('building.create');
+        return view('estates.building.create');
     }
 
     /**
@@ -39,7 +39,7 @@ class BuildingController extends Controller
         $building->setAttribute('friendly_name', $validated['friendly_name']);
         $building->save();
 
-        return redirect(route('building.show', $validated['id']));
+        return redirect(route('building.show', $building->__get('id')));
     }
 
     /**
@@ -47,7 +47,7 @@ class BuildingController extends Controller
      */
     public function show(string $id): View
     {
-        return view('building.show', [
+        return view('estates.building.show', [
             'Building' => Building::where('id', '=', $id)->firstOrFail()
         ]);
     }
@@ -57,7 +57,7 @@ class BuildingController extends Controller
      */
     public function edit(string $id): View
     {
-        return view('building.edit', [
+        return view('estates.building.edit', [
             'Building' => Building::where('id', '=', $id)->firstOrFail()
         ]);
     }
@@ -73,7 +73,7 @@ class BuildingController extends Controller
         $building->setAttribute('friendly_name', $validated['friendly_name']);
         $building->update();
 
-        return redirect(route('building.show', $validated['id']));
+        return redirect(route('building.show', $building->__get('id')));
     }
 
     /**
@@ -82,7 +82,7 @@ class BuildingController extends Controller
     public function destroy(string $id): RedirectResponse
     {
         $building = Building::find($id);
-        $building->rooms()->detach();
+        //$building->rooms()->detach();
         $building->delete();
         return redirect(route('building.index'));
     }

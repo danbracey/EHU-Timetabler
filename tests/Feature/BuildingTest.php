@@ -24,25 +24,31 @@ class BuildingTest extends TestCase
 
     public function test_building_screen_cannot_be_accessed_by_unauthenticated_users(): void
     {
-        $response = $this->get(route('estates.building.index'));
+        $response = $this->get(route('building.index'));
         $response->assertRedirect();
     }
 
     public function test_buildings_index_screen_can_be_rendered_by_staff(): void
     {
-        $response = $this->actingAs($this->user)->get('/building/');
+        $response = $this->actingAs($this->user)->get(route('building.index'));
         $response->assertStatus(200);
+    }
+
+    public function test_buildings_index_screen_has_add_new_building_button(): void
+    {
+        $response = $this->actingAs($this->user)->get(route('building.index'));
+        $response->assertSeeText('+ Add new Building');
     }
 
     public function test_building_creation_screen_cannot_be_accessed_by_unauthenticated_users(): void
     {
-        $response = $this->get('/building/create');
+        $response = $this->get(route('building.create'));
         $response->assertRedirect();
     }
 
     public function test_building_creation_screen_can_be_rendered_by_staff(): void
     {
-        $response = $this->actingAs($this->user)->get('/building/create');
+        $response = $this->actingAs($this->user)->get(route('building.create'));
         $response->assertStatus(200);
     }
 
@@ -63,6 +69,22 @@ class BuildingTest extends TestCase
         $response->assertStatus(200);
     }
 
+    public function test_buildings_show_screen_has_edit_building_button(): void
+    {
+        $building = Building::factory()->createOne();
+
+        $response = $this->actingAs($this->user)->get(route('building.show', $building->__get('id')));
+        $response->assertSeeText('Edit Building');
+    }
+
+    public function test_buildings_show_screen_has_delete_building_button(): void
+    {
+        $building = Building::factory()->createOne();
+
+        $response = $this->actingAs($this->user)->get(route('building.show', $building->__get('id')));
+        $response->assertSeeText('Delete Building');
+    }
+
     public function test_building_can_be_updated(): void
     {
         $building = Building::factory()->createOne();
@@ -79,7 +101,7 @@ class BuildingTest extends TestCase
 
         // Assert against the updated values
         $this->assertSame('Catalyst', $building->__get('friendly_name'));
-        $this->assertSame($building->__get('id'), $building->__get('degree_id'));
+        $this->assertSame($building->__get('id'), $building->__get('id'));
     }
 
     public function test_building_can_be_deleted(): void

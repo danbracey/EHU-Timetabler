@@ -9,6 +9,8 @@ class Building extends Model
 {
     use HasFactory;
 
+    private int $id;
+
     public function rooms()
     {
         //TODO: Get relationship between rooms & buildings

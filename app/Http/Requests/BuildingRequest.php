@@ -11,7 +11,7 @@ class BuildingRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true; //Handled via route middleware
     }
 
     /**
