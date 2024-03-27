@@ -5,11 +5,15 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="/" class="font-copse text-2xl">
+                    <a href="/" class="text-white font-copse text-2xl">
                         EHU Timetabler
                     </a>
                 </div>
             </div>
+
+            <form class="flex my-2 text-black" method="get">
+                <x-text-input placeholder="Enter your student ID" class="w-full border-ehu-pink border-4" id="student_id" name="student_id"></x-text-input>
+            </form>
 
             <!-- Settings Dropdown -->
             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">

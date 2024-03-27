@@ -22,7 +22,7 @@
 
     <!-- Page Heading -->
     @if (isset($header))
-        <header class="font-copse text-4xl max-w-7xl mx-auto m-10 py-6 px-4 sm:px-6 lg:px-8">
+        <header class="font-copse text-4xl max-w-7xl mx-auto mt-10 py-6 px-4 sm:px-6 lg:px-8">
             <h1>{{ $header }}</h1>
         </header>
     @endif
