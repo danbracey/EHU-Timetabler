@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\BuildingRequest;
+use App\Http\Requests\RoomRequest;
 use App\Models\Building;
 use App\Models\Room;
 use Illuminate\Contracts\View\View;
@@ -18,17 +19,17 @@ class RoomController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(): View
+    public function create(Building $building): View
     {
         return view('estates.room.create', [
-            'Buildings' => Building::all()
+            'Building' => Building::find($building)->first()
         ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(RoomRequest $request): RedirectResponse
+    public function store(Building $building, RoomRequest $request): RedirectResponse
     {
         $validated = $request->validated();
 
@@ -36,21 +37,17 @@ class RoomController extends Controller
         $room->setAttribute('id', $validated['id']);
         $room->setAttribute('available_seats', $validated['available_seats']);
         $room->setAttribute('available_computers', $validated['available_computers']);
-        $room->setAttribute('is_lecture_hall', $validated['is_lecture_hall']);
+        $room->setAttribute('is_lecture_hall', $validated['is_lecture_hall'] ?? false);
+        $room->setAttribute('building', $building->__get('id'));
         $room->save();
 
-        return redirect(route('room.show', [$room->__get('building'), $room->__get('id')]));
+        return redirect(route('building.show', $building->__get('id')));
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Building $building, Room $room): View
-    {
-        return view('estates.room.show', [
-            'Room' => Room::where('id', '=', $room)->where('building', '=', $building)->firstOrFail()
-        ]);
-    }
+    // No show route necessary for Rooms, accessed via Buildings (Estates)
 
     /**
      * Show the form for editing the specified resource.
@@ -58,7 +55,9 @@ class RoomController extends Controller
     public function edit(Building $building, Room $room): View
     {
         return view('estates.room.edit', [
-            'Room' => Room::where('id', '=', $room)->where('building', '=', $building)->firstOrFail()
+            'Building' => $building,
+            'Buildings' => Building::all(),
+            'Room' => Room::where('id', '=', $room->id)->firstOrFail()
         ]);
     }
 
@@ -69,30 +68,35 @@ class RoomController extends Controller
     {
         Validator::make((array)$request, [
             'id' => [
-                Rule::unique('rooms')->ignore($room),
+                Rule::unique('rooms')->ignore($room->__get('id')),
             ],
         ]);
 
         $validated = $request->validated();
 
-        $room = Room::where('id', '=', $room)->where('building', '=', $building)->firstOrFail();
+        $room = Room::where('id', '=', $room->id)->where('building', '=', $building->id)->firstOrFail();
         $room->setAttribute('id', $validated['id']);
         $room->setAttribute('available_seats', $validated['available_seats']);
         $room->setAttribute('available_computers', $validated['available_computers']);
-        $room->setAttribute('is_lecture_hall', $validated['is_lecture_hall']);
+        $room->setAttribute('is_lecture_hall', true);
+        if (isset($validated['is_lecture_hall'])) {
+            $room->setAttribute('is_lecture_hall', true);
+        } else {
+            $room->setAttribute('is_lecture_hall', false);
+        }
+
         $room->update();
 
-        return redirect(route('room.show', [$building, $room->__get('id')]));
+        return redirect(route('building.show', $building));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id): RedirectResponse
+    public function destroy(Building $building, Room $room): RedirectResponse
     {
-        $room = Room::find($id);
-        $room->getBuilding()->detach();
+        $room = Room::where('id', '=', $room->__get('id'))->firstOrFail();
         $room->delete();
-        return redirect(route('buildings.index'));
+        return redirect(route('building.index'));
     }
 }

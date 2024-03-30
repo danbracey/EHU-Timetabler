@@ -23,10 +23,10 @@ class RoomRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'string|unique:rooms',
+            'id' => 'string',
             'available_seats' => 'integer',
             'available_computers' => 'integer',
-            'is_lecture_hall' => 'boolean'
+            'is_lecture_hall' => 'nullable'
         ];
     }
 }

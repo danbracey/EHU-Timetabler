@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\BuildingRequest;
 use App\Models\Building;
+use App\Models\Room;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -81,8 +82,9 @@ class BuildingController extends Controller
      */
     public function destroy(string $id): RedirectResponse
     {
-        $building = Building::find($id);
-        //$building->rooms()->detach();
+        $building = Building::where('id', '=', $id)->firstOrFail();
+        //Delete all rooms attached to this building
+        Room::where('building', '=', $building->id)->delete();
         $building->delete();
         return redirect(route('building.index'));
     }

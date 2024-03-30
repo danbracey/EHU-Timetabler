@@ -22,7 +22,7 @@
                         {{ __('Modules') }}
                     </x-nav-link>
                     <x-nav-link :href="route('building.index')" :active="request()->routeIs('building.index')">
-                        {{ __('Estates') }}
+                        {{ __('Buildings & Rooms') }}
                     </x-nav-link>
                     <x-nav-link :href="route('student.index')" :active="request()->routeIs('student.index')">
                         {{ __('Students') }}

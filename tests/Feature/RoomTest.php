@@ -61,19 +61,11 @@ class RoomTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_rooms_show_screen_has_edit_room_button(): void
+    public function test_rooms_edit_screen_has_delete_room_button(): void
     {
         $room = Room::factory()->createOne();
 
-        $response = $this->actingAs($this->user)->get(route('room.show', $room->__get('id')));
-        $response->assertSeeText('Edit Room');
-    }
-
-    public function test_rooms_show_screen_has_delete_room_button(): void
-    {
-        $room = Room::factory()->createOne();
-
-        $response = $this->actingAs($this->user)->get(route('room.show', $room->__get('id')));
+        $response = $this->actingAs($this->user)->get(route('room.edit', $room->__get('id')));
         $response->assertSeeText('Delete Room');
     }
 

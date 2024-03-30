@@ -15,7 +15,14 @@
             <h2 class="text-3xl">Rooms in this Building</h2>
             <ul class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 @foreach($Building->rooms as $Room)
-                    <li><a href="{{route('module.show', $Room->id)}}">{{$Room->friendly_name}}</a></li>
+                    <li>
+                        <a href="{{route('room.edit', [$Building->id, $Room->id])}}">
+                            {{$Room->id}}
+                            (Seats: {{$Room->available_seats}})
+                            (Available Computers: {{$Room->available_computers}})
+                            (Lecture Hall: {{$Room->is_lecture_hall ? "YES" : "No"}})
+                        </a>
+                    </li>
                 @endforeach
             </ul>
         </div>
@@ -30,6 +37,10 @@
         <h2 class="text-lg font-medium text-gray-900">
             {{ __('Are you sure you want to delete this building?') }}
         </h2>
+
+        <h3 class="text-lg font-medium text-red-700">
+            {{ __('This will delete ALL rooms attached to this building!') }}
+        </h3>
 
         <div class="mt-6 flex justify-end">
             <x-secondary-button x-on:click="$dispatch('close')">
