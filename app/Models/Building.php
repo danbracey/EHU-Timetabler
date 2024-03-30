@@ -13,6 +13,6 @@ class Building extends Model
 
     public function rooms()
     {
-        //TODO: Get relationship between rooms & buildings
+        return $this->hasMany(Room::class, 'building', 'id');
     }
 }

@@ -2,6 +2,7 @@
     <x-slot name="header">
         {{ $Building->friendly_name }}
         <div>
+            <a href="{{route('room.create', $Building->id)}}"><x-secondary-button>Create Room</x-secondary-button></a>
             <a href="{{route('building.edit', $Building->id)}}"><x-secondary-button>Edit Building</x-secondary-button></a>
             <x-danger-button x-data="" x-on:click.prevent="$dispatch('open-modal', 'confirm-building-deletion')">
                 {{ __('Delete Building') }}
@@ -11,11 +12,11 @@
 
     <section>
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <h2 class="text-3xl">Modules on this degree</h2>
+            <h2 class="text-3xl">Rooms in this Building</h2>
             <ul class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-{{--                @foreach($Building->rooms as $Room)--}}
-{{--                    <li><a href="{{route('module.show', $Room->id)}}">{{$Room->friendly_name}}</a></li>--}}
-{{--                @endforeach--}}
+                @foreach($Building->rooms as $Room)
+                    <li><a href="{{route('module.show', $Room->id)}}">{{$Room->friendly_name}}</a></li>
+                @endforeach
             </ul>
         </div>
     </section>

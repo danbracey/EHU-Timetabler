@@ -4,8 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Room extends Model
 {
     use HasFactory;
+
+    public $incrementing = false;
+
+    public function getBuilding(): HasOne
+    {
+        return $this->hasOne(Building::class, 'id', 'building');
+    }
 }
