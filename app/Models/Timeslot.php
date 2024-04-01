@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Timeslot extends Model
 {
     use HasFactory;
+
+    protected $table = 'module_timeslot';
 }
