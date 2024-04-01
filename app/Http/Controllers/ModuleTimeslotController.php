@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Module;
 use App\Models\Room;
+use App\Models\Timeslot;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Ramsey\Uuid\Type\Time;
@@ -60,7 +62,7 @@ class ModuleTimeslotController extends Controller
     {
         $validated = $request->validated();
 
-        $timeslot->setAttribute('module_id', $timeslot->id);
+        $timeslot->setAttribute('module_id', $timeslot->__get('id'));
         $timeslot->setAttribute('room_id', $validated['room_id']);
         $timeslot->setAttribute('day_of_week', $validated['day_of_week']);
         $timeslot->setAttribute('start_time', $validated['start_time']);
@@ -74,7 +76,7 @@ class ModuleTimeslotController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Module $module, Timeslot $timeslot)
+    public function destroy(Module $module, Timeslot $timeslot): RedirectResponse
     {
         $timeslot->delete();
 
