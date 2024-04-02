@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('module_timeslot', function (Blueprint $table) {
-            $table->id()->pri;
-            $table->unsignedInteger('module_id');
+            $table->id();
+            $table->unsignedBigInteger('module_id');
             $table->string('room_id');
             $table->tinyInteger('day_of_week');
             $table->time('start_time');
@@ -31,6 +31,11 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('module_timeslot', function (Blueprint $table) {
+            $table->dropForeign(['module_id']);
+            $table->dropForeign(['room_id']);
+        });
+
         Schema::dropIfExists('module_timeslot');
     }
 };
