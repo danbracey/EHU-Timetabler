@@ -199,4 +199,22 @@ class ModuleTest extends TestCase
 
         $response->assertRedirect();
     }
+
+    /**
+     * @throws \Exception
+     */
+    public function test_manual_timeslot_creation_cannot_clash_with_existing_timeslot(): void
+    {
+        $timeslotOne = Timeslot::factory()->create();
+
+        $response = $this->actingAs($this->user)->post(route('module.timeslot.store', $timeslotOne->__get('module_id')), [
+            'room_id' => $timeslotOne->__get('room_id'),
+            'day_of_week' => $timeslotOne->__get('day_of_week'),
+            'start_time' => $timeslotOne->__get('start_time'),
+            'end_time' => $timeslotOne->__get('start_time') + 0.30 //This ensures that clashes are checked for the duration of the session, not just the exact start & end times
+        ]);
+
+        $response->assertSessionHasErrors();
+
+    }
 }
