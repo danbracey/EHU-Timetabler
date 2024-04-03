@@ -26,7 +26,7 @@ class TimeslotRequest extends FormRequest
             'day_of_week' => 'numeric|min:1,max:5',
             'start_time' => 'date_format:H:i',
             'end_time' => 'date_format:H:i|after:time_start',
-            'is_lecture' => 'boolean'
+            'is_lecture' => 'nullable'
         ];
     }
 }

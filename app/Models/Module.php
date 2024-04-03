@@ -12,8 +12,15 @@ class Module extends Model
 
     public $incrementing = false;
 
+    private int $id;
+
     public function degrees(): BelongsToMany
     {
         return $this->belongsToMany(Degree::class, 'degree_module', 'module_id', 'degree_id');
+    }
+
+    public function timeslots()
+    {
+        return $this->hasMany(Timeslot::class, 'module_id', 'id');
     }
 }
