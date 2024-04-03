@@ -54,7 +54,7 @@ class ModuleTimeslotController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Module $module, Timeslot $timeslot)
+    public function update(TimeslotRequest $request, Module $module, Timeslot $timeslot)
     {
         $validated = $request->validated();
 

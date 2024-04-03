@@ -59,7 +59,7 @@
                         <td>{{$Timeslot->room_id}}</td>
                         <td>{{$Timeslot->start_time}}</td>
                         <td>{{$Timeslot->end_time}}</td>
-                        <td>{{$Timeslot->lecture ? '✅' : '❌'}}</td>
+                        <td>{{$Timeslot->is_lecture ? '✅' : '❌'}}</td>
                         <td>
                             <form method="POST" action="{{route('module.timeslot.destroy', [$Module->id, $Timeslot->id])}}">
                                 @csrf @method("DELETE")
