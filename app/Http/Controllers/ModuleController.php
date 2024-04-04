@@ -39,6 +39,11 @@ class ModuleController extends Controller
      */
     public function store(ModuleRequest $request): RedirectResponse
     {
+        Validator::make((array)$request, [
+            'id' => [
+                Rule::unique('modules'),
+            ],
+        ]);
         $validated = $request->validated();
 
         $module = new Module();

@@ -3,10 +3,25 @@
             <form method="POST" action="{{ route('module.timeslot.store', $Module->id) }}" class="p-10">
                 @csrf
 
+                @if($errors->get('clashes'))
+                    <div role="alert" class="mb-5">
+                        <div class="bg-red-500 text-white font-bold rounded-t px-4 py-2">
+                            Clashes Detected
+                        </div>
+                        <div class="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">
+                            <p>The following clashes were detected:</p>
+                                <ul>
+                                    @foreach(collect($errors->get('clashes'))->flatten() as $clash)
+                                        <li>Module {{$clash->module_id}} using Room {{$clash->room_id}} ({{$clash->start_time}} - {{$clash->end_time}})</li>
+                                    @endforeach
+                                </ul>
+                        </div>
+                    </div>
+                @endif
+
                 <!-- Module ID -->
                 Creating a manual Timetable entry for:
                 CIS{{$Module->id}}: {{$Module->friendly_name}}
-
 
                 <!-- Room -->
                 <div>
@@ -23,11 +38,11 @@
                 <div>
                     <x-input-label for="day_of_week" :value="__('Day of Week')" />
                     <x-select name="day_of_week" class="w-full">
-                        <option value=1>Monday</option>
-                        <option value=2>Tuesday</option>
-                        <option value=3>Wednesday</option>
-                        <option value=4>Thursday</option>
-                        <option value=5>Friday</option>
+                        <option value=1 @selected(old('day_of_week') == 1)>Monday</option>
+                        <option value=2 @selected(old('day_of_week') == 2)>Tuesday</option>
+                        <option value=3 @selected(old('day_of_week') == 3)>Wednesday</option>
+                        <option value=4 @selected(old('day_of_week') == 4)>Thursday</option>
+                        <option value=5 @selected(old('day_of_week') == 5)>Friday</option>
                     </x-select>
                     <x-input-error :messages="$errors->get('day_of_week')" class="mt-2" />
                 </div>

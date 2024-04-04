@@ -2,14 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use _PHPStan_8c645376c\Nette\Neon\Exception;
 use App\Http\Requests\TimeslotRequest;
 use App\Models\Module;
 use App\Models\Room;
 use App\Models\Timeslot;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 use Ramsey\Uuid\Type\Time;
+use Illuminate\Support\Facades\DB;
+
+use function PHPUnit\Framework\throwException;
 
 class ModuleTimeslotController extends Controller
 {
@@ -26,11 +32,18 @@ class ModuleTimeslotController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * @throws ValidationException
      */
     public function store(Module $module, TimeslotRequest $request): RedirectResponse
     {
         $validated = $request->validated();
-        //TODO: Check conflict and reject if conflict occurs
+        $conflict = $this->checkConflict($module, $validated);
+
+        if ($conflict) {
+            throw ValidationException::withMessages(
+                ['clashes' => $conflict]
+            );
+        }
 
         $timeslot = new Timeslot();
         $this->setAttributes($timeslot, $module, $validated, $request);
@@ -85,11 +98,35 @@ class ModuleTimeslotController extends Controller
      */
     private function setAttributes(Timeslot $timeslot, Module $module, $validated, Request $request): void
     {
+        //Proceed with setting attributes
         $timeslot->setAttribute('module_id', $module->__get('id'));
         $timeslot->setAttribute('room_id', $validated['room_id']);
         $timeslot->setAttribute('day_of_week', $validated['day_of_week']);
         $timeslot->setAttribute('start_time', $validated['start_time']);
         $timeslot->setAttribute('end_time', $validated['end_time']);
         $timeslot->setAttribute('is_lecture', $request->__get('is_lecture') ? 1 : 0);
+    }
+
+    public function checkConflict($module, $validated)
+    {
+        //Check conflict and reject
+
+//        return Timeslot::where('room_id', '=', $validated['room_id'])
+//            ->where('day_of_week', '=', $validated['day_of_week'])
+//            ->orWhere('module_id', '=', $module->__get('id'))
+//            ->whereNot(function ($query) use ($validated) {
+//                $query->where('end_time', '<=', $validated['start_time'])
+//                    ->orWhere('start_time', '>=', $validated['end_time']);
+//            })
+//            ->count();
+
+        return Timeslot::where('room_id', '=', $validated['room_id'])
+            ->where('day_of_week', '=', $validated['day_of_week'])
+            ->where(function ($query) use ($validated) {
+                $query->where('start_time', '<', $validated['end_time'])
+                    ->where('end_time', '>', $validated['start_time']);
+            })
+            ->orWhere('module_id', '=', $module->__get('id'))
+            ->get();
     }
 }
