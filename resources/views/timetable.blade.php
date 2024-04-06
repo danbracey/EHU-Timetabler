@@ -26,6 +26,7 @@
         const calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: 'timeGridWeek',
             events: @json($events),
+            nowIndicator: true,
         });
         calendar.render();
     });
