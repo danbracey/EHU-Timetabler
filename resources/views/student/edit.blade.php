@@ -29,9 +29,9 @@
             <div>
                 <x-input-label for="degree" :value="__('Degree')" />
                 <x-select class="w-full">
-                        <option value="{{$Student->getDegree->id}}">{{$Student->getDegree->id}} - {{$Student->getDegree->friendly_name}}</option>
+                        <option value="{{$Student->degree->id}}">{{$Student->degree->id}} - {{$Student->degree->friendly_name}}</option>
                     @foreach($Degrees as $Degree)
-                        @if($Degree->id !== $Student->getDegree->id) {{-- Show all degrees except the one the student is on --}}
+                        @if($Degree->id !== $Student->degree->id) {{-- Show all degrees except the one the student is on --}}
                         <option value="{{$Degree->id}}">{{$Degree->id}} - {{$Degree->friendly_name}}</option>
                         @endif
                     @endforeach

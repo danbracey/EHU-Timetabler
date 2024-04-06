@@ -36,26 +36,7 @@
                 <tbody>
                 @foreach($Module->timeslots as $Timeslot)
                     <tr>
-                        @switch($Timeslot->day_of_week)
-                            @case(1)
-                                <td>Monday</td>
-                            @break
-                            @case(2)
-                                <td>Tuesday</td>
-                            @break
-                            @case(3)
-                                <td>Wednesday</td>
-                            @break
-                            @case(4)
-                                <td>Thursday</td>
-                            @break
-                            @case(5)
-                                <td>Friday</td>
-                            @break
-                            @default
-                                <td>Unknown</td>
-                            @break
-                        @endswitch
+                        <td>{{\App\Helpers\TimeslotFunctions::parseDay($Timeslot->day_of_week)}}</td>
                         <td>{{$Timeslot->room_id}}</td>
                         <td>{{$Timeslot->start_time}}</td>
                         <td>{{$Timeslot->end_time}}</td>
