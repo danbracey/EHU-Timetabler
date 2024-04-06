@@ -4,20 +4,25 @@
     </x-slot>
     <p class="font-copse max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">Your degree: {{$Student->degree->friendly_name}} ({{$Student->degree->id}})</p>
 
-    <main class="flex-col">
-        <section class="">
+    <main class="flex flex-col md:flex-row gap-8 justify-center">
+        <section class="basis-1/4">
             <aside>
                 Today
-                <span>0</span> Classes
+                <div class="flex flex-col justify-items-center">
+                    <span>{{count($classesToday)}}</span><span>Classes</span>
+                </div>
                 <p>Next Class</p>
                 <!-- Insert component -->
             </aside>
             <article>
-                <!-- Today's classes show here -->
+                <h2>Your classes today:</h2>
+                @foreach ($classesToday as $timeslot)
+                    <x-timetabled-class :timeslot="$timeslot"></x-timetabled-class>
+                @endforeach
             </article>
         </section>
 
-        <div id='calendar'></div>
+        <section id='calendar' class="basis-1/2"></section>
     </main>
 </x-student-layout>
 <script>

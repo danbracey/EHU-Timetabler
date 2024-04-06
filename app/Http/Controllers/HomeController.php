@@ -19,6 +19,9 @@ class HomeController extends Controller
         if ($request->student_id) {
             $events = [];
             $student = Student::where('id', '=', $request->student_id)->first();
+            if (!$student) {
+                return view('welcome')->withErrors(['Unable to find student!']);
+            }
 
             /** Prepare student's timetable into FullCalendar.io compatible array */
             foreach ($student->degree->modules as $module) {
@@ -34,10 +37,19 @@ class HomeController extends Controller
                 }
             }
 
+            $classesToday = [];
+            /** Show student's classes for the day */
+            foreach ($student->degree->modules->flatMap->timeslots as $timeslot) {
+                if ($timeslot->day_of_week == \Carbon\Carbon::now()->dayOfWeek) {
+                    $classesToday[] = $timeslot;
+                }
+            }
+
             if ($student) {
                 return view('timetable', [
                     'Student' => $student,
-                    'events' => $events
+                    'events' => $events,
+                    'classesToday' => $classesToday
                 ]);
             } else {
                 return view('welcome')->withErrors(['Unable to find student!']);
