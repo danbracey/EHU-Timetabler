@@ -27,6 +27,8 @@
             initialView: 'timeGridWeek',
             events: @json($events),
             nowIndicator: true,
+            slotMinTime: "08:00:00",
+            slotMaxTime: "18:00:00"
         });
         calendar.render();
     });
