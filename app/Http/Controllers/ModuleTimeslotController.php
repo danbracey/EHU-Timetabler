@@ -2,20 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use _PHPStan_8c645376c\Nette\Neon\Exception;
 use App\Http\Requests\TimeslotRequest;
 use App\Models\Module;
 use App\Models\Room;
 use App\Models\Timeslot;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
-use Ramsey\Uuid\Type\Time;
-use Illuminate\Support\Facades\DB;
-
-use function PHPUnit\Framework\throwException;
 
 class ModuleTimeslotController extends Controller
 {
@@ -67,7 +61,7 @@ class ModuleTimeslotController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(TimeslotRequest $request, Module $module, Timeslot $timeslot)
+    public function update(TimeslotRequest $request, Module $module, Timeslot $timeslot): RedirectResponse
     {
         $validated = $request->validated();
 
