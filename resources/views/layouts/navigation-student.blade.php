@@ -12,7 +12,7 @@
             </div>
 
             <form class="flex my-2 text-black" method="get">
-                <x-text-input placeholder="Enter your student ID" class="w-full border-ehu-pink border-4" id="student_id" name="student_id"></x-text-input>
+                <x-text-input placeholder="Enter your student ID" class="w-full border-ehu-pink border-4" id="student_id" name="student_id" value="{{app('request')->input('student_id')}}"></x-text-input>
             </form>
 
             <!-- Settings Dropdown -->

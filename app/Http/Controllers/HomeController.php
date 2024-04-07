@@ -40,20 +40,16 @@ class HomeController extends Controller
             $classesToday = [];
             /** Show student's classes for the day */
             foreach ($student->degree->modules->flatMap->timeslots as $timeslot) {
-                if ($timeslot->day_of_week == \Carbon\Carbon::now()->dayOfWeek) {
+                if ($timeslot->day_of_week == date('N')) {
                     $classesToday[] = $timeslot;
                 }
             }
 
-            if ($student) {
-                return view('timetable', [
-                    'Student' => $student,
-                    'events' => $events,
-                    'classesToday' => $classesToday
-                ]);
-            } else {
-                return view('welcome')->withErrors(['Unable to find student!']);
-            }
+            return view('timetable', [
+                'Student' => $student,
+                'events' => $events,
+                'classesToday' => $classesToday
+            ]);
         } else {
             return view('welcome');
         }
