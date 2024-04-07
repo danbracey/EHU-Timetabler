@@ -71,7 +71,7 @@ class DegreeSeeder extends Seeder
         ]);
         Degree::factory()->create([
             'id' => 'W4D7',
-            'friendly_name' => 'MSc Cyber Security'
+            'friendly_name' => 'Web Design and Development'
         ]);
         Degree::factory()->create([
             'id' => 'MsC BDA',

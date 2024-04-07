@@ -27,7 +27,10 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call([
-            DegreeSeeder::class
+            DegreeSeeder::class,
+            StudentSeeder::class,
+            ModuleSeeder::class,
+            DegreeModuleSeeder::class
         ]);
     }
 }
