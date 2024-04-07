@@ -64,6 +64,7 @@ class StudentTest extends TestCase
      */
     public function test_student_can_be_created(): void
     {
+
         $Degree = Degree::factory()->createOne();
         $response = $this->actingAs($this->user)->post(route('student.store'), [
             'id' => rand(10000000, 99999999),
@@ -92,6 +93,7 @@ class StudentTest extends TestCase
 
     /**
      * @throws JsonException
+     * @throws \Exception
      */
     public function test_student_can_be_updated(): void
     {

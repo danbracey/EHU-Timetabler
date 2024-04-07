@@ -25,23 +25,29 @@ class HomeController extends Controller
 
             /** Prepare student's timetable into FullCalendar.io compatible array */
             foreach ($student->degree->modules as $module) {
-                foreach ($module->timeslots as $timeslot) {
-                    $events[] = [
-                        'id' => $timeslot->id,
-                        'title' => "CIS" . $timeslot->module_id . " (Rm: " . $timeslot->room_id . ")",
-                        'startTime' => $timeslot->start_time,
-                        'endTime' => $timeslot->end_time,
-                        'daysOfWeek' => [$timeslot->day_of_week],
-                        'allDay' => false,
-                    ];
+                if (substr($module->id, 0, 1) === $student->degree->graduation_year - date("Y")) {
+                    foreach ($module->timeslots as $timeslot) {
+                        $events[] = [
+                            'id' => $timeslot->id,
+                            'title' => "CIS" . $timeslot->module_id . " (Rm: " . $timeslot->room_id . ")",
+                            'startTime' => $timeslot->start_time,
+                            'endTime' => $timeslot->end_time,
+                            'daysOfWeek' => [$timeslot->day_of_week],
+                            'allDay' => false,
+                        ];
+                    }
                 }
             }
 
             $classesToday = [];
             /** Show student's classes for the day */
-            foreach ($student->degree->modules->flatMap->timeslots as $timeslot) {
-                if ($timeslot->day_of_week == date('N')) {
-                    $classesToday[] = $timeslot;
+            foreach ($student->degree->modules as $module) {
+                if (substr($module->id, 0, 1) === $student->degree->graduation_year - date("Y")) {
+                    foreach ($module->timeslots as $timeslot) {
+                        if ($timeslot->day_of_week == date('N')) {
+                            $classesToday[] = $timeslot;
+                        }
+                    }
                 }
             }
 

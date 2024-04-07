@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('modules', function (Blueprint $table) {
             $table->id();
             $table->string('friendly_name');
-            $table->string('academic_year');
             $table->timestamps();
         });
     }

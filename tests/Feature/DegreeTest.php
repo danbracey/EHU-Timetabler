@@ -49,8 +49,9 @@ class DegreeTest extends TestCase
     public function test_degree_can_be_created(): void
     {
         $response = $this->actingAs($this->user)->post(route('degree.store'), [
-            'id' => 'W4D7',
-            'friendly_name' => 'Web Design & Development'
+            'code' => 'W4D7',
+            'friendly_name' => 'Web Design & Development',
+            'graduation_year' => 2027
         ]);
 
         $response->assertRedirect();
@@ -69,11 +70,12 @@ class DegreeTest extends TestCase
         $degree = Degree::factory()->createOne();
 
         $response = $this->actingAs($this->user)->patch(route('degree.update', $degree->__get('id')), [
-            'id' => 'W000',
-            'friendly_name' => 'Web Development & Design'
+            'code' => 'W000',
+            'friendly_name' => 'Web Development & Design',
+            'graduation_year' => 2027
         ]);
 
-        $degree = Degree::where('id', '=', 'W000')->firstOrFail();
+        $degree = Degree::where('code', '=', 'W000')->firstOrFail();
         $this->assertModelExists($degree);
 
         $response->assertRedirect();

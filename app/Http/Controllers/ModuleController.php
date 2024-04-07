@@ -49,8 +49,8 @@ class ModuleController extends Controller
         $module = new Module();
         $module->setAttribute('id', $validated['id']);
         $module->setAttribute('friendly_name', $validated['friendly_name']);
-        $module->setAttribute('academic_year', $validated['academic_year']);
         $module->save();
+        $module->degrees()->sync($validated['degrees']);
 
         return redirect(route('module.show', $validated['id']));
     }
@@ -92,7 +92,6 @@ class ModuleController extends Controller
         $module = Module::where('id', '=', $id)->firstOrFail();
         $module->setAttribute('id', $validated['id']);
         $module->setAttribute('friendly_name', $validated['friendly_name']);
-        $module->setAttribute('academic_year', $validated['academic_year']);
         $module->degrees()->sync($validated['degrees']);
         $module->update();
 

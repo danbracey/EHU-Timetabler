@@ -15,7 +15,9 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <h2 class="text-3xl">Student's Modules:</h2>
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <!-- Include modules for student -->
+                @foreach($Student->degree->modules as $Module)
+                    <a href="{{route('module.show', $Module->id)}}">CIS{{$Module->id}}</a>
+                @endforeach
             </div>
         </div>
     </section>

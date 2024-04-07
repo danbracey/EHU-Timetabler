@@ -15,7 +15,7 @@ return new class extends Migration
             $table->integer('id')->primary()->unique();
             $table->string('first_name');
             $table->string('last_name');
-            $table->string('degree_id');
+            $table->unsignedBigInteger('degree_id');
             $table->timestamps();
 
             $table->foreign('degree_id')->references('id')->on('degrees');

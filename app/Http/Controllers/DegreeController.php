@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\DegreeRequest;
 use App\Models\Degree;
+use App\Models\Module;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -25,7 +26,9 @@ class DegreeController extends Controller
      */
     public function create(): View
     {
-        return view('degree.create');
+        return view('degree.create', [
+            'Modules' => Module::all()
+        ]);
     }
 
     /**
@@ -36,11 +39,13 @@ class DegreeController extends Controller
         $validated = $request->validated();
 
         $degree = new Degree();
-        $degree->setAttribute('id', $validated['id']);
+        $degree->setAttribute('code', $validated['code']);
         $degree->setAttribute('friendly_name', $validated['friendly_name']);
+        $degree->setAttribute('graduation_year', $validated['graduation_year']);
         $degree->save();
+        $degree->modules()->sync($validated['modules']);
 
-        return redirect(route('degree.show', $validated['id']));
+        return redirect(route('degree.show', $degree->id));
     }
 
     /**
@@ -59,7 +64,8 @@ class DegreeController extends Controller
     public function edit(string $id): View
     {
         return view('degree.edit', [
-            'Degree' => Degree::where('id', '=', $id)->firstOrFail()
+            'Degree' => Degree::where('id', '=', $id)->firstOrFail(),
+            'Modules' => Module::all()
         ]);
     }
 
@@ -71,11 +77,13 @@ class DegreeController extends Controller
         $validated = $request->validated();
 
         $degree = Degree::where('id', '=', $id)->firstOrFail();
-        $degree->setAttribute('id', $validated['id']);
+        $degree->setAttribute('code', $validated['code']);
         $degree->setAttribute('friendly_name', $validated['friendly_name']);
+        $degree->setAttribute('graduation_year', $validated['graduation_year']);
+        $degree->modules()->sync($validated['modules']);
         $degree->update();
 
-        return redirect(route('degree.show', $validated['id']));
+        return redirect(route('degree.show', $degree->id));
     }
 
     /**

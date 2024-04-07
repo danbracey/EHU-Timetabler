@@ -23,8 +23,10 @@ class DegreeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'string|unique:degrees|max:4',
-            'friendly_name' => 'string|unique:degrees|max:255'
+            'code' => 'string|max:4',
+            'friendly_name' => 'string|max:255',
+            'graduation_year' => 'integer|digits:4',
+            'modules' => 'array'
         ];
     }
 }

@@ -10,12 +10,12 @@ class Degree extends Model
 {
     use HasFactory;
 
-    public $incrementing = false;
+    public $incrementing = true;
 
     /**
      * @var string
      */
-    private string $id;
+    private string $code;
     /**
      * @var string
      */
