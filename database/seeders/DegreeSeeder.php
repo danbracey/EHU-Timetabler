@@ -49,5 +49,41 @@ class DegreeSeeder extends Seeder
             'id' => 'GN52',
             'friendly_name' => 'Information Technology Management for Business'
         ]);
+        Degree::factory()->create([
+            'id' => 'H671/2',
+            'friendly_name' => 'Intelligent Automation & Robotics'
+        ]);
+        Degree::factory()->create([
+            'id' => 'I1I4',
+            'friendly_name' => 'Computer Science & Artificial Intelligence'
+        ]);
+        Degree::factory()->create([
+            'id' => 'I290',
+            'friendly_name' => 'Computing (Networking, Security and Forensics)'
+        ]);
+        Degree::factory()->create([
+            'id' => 'I610',
+            'friendly_name' => 'Computing (Games Programming)'
+        ]);
+        Degree::factory()->create([
+            'id' => 'II33',
+            'friendly_name' => 'Software Engineering'
+        ]);
+        Degree::factory()->create([
+            'id' => 'W4D7',
+            'friendly_name' => 'MSc Cyber Security'
+        ]);
+        Degree::factory()->create([
+            'id' => 'MsC BDA',
+            'friendly_name' => 'Web Design, Development and Analytics'
+        ]);
+        Degree::factory()->create([
+            'id' => 'MsC Comp',
+            'friendly_name' => 'MSc Computing'
+        ]);
+        Degree::factory()->create([
+            'id' => 'Msc CyberSec',
+            'friendly_name' => 'MSc Cyber Security'
+        ]);
     }
 }
