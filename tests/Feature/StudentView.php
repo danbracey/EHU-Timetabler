@@ -15,19 +15,31 @@ class StudentView extends TestCase
     {
         parent::setUp();
         $this->withoutVite();
+
+        $student = Student::factory()->createOne();
+        $this->response = $this->get('/?student_id=' . $student->__get('id'));
+        $this->student = $student->__get('id');
     }
 
     /**
      * Student can see their student details
      */
-    public function test_example_student_details_render_correctly(): void
+    public function test_student_details_render_correctly(): void
     {
-        $student = Student::factory()->createOne();
-        $response = $this->get('/?student_id=' . $student->__get('id'));
+        $this->response->assertStatus(200);
+        $this->response->assertSeeText($this->student->__get('first_name'));
+        $this->response->assertSeeText($this->student->__get('last_name'));
+        $this->response->assertSeeText($this->student->degree->__get('name'));
+    }
 
-        $response->assertStatus(200);
-        $response->assertSeeText($student->__get('first_name'));
-        $response->assertSeeText($student->__get('last_name'));
-        $response->assertSeeText($student->getDegree->__get('name'));
+    public function test_student_today_block_renders_correctly(): void
+    {
+        $this->response->assertSeeText("Today");
+
+        //Get the number of classes a student has today
+
+
+        $this->response->assertSeeText("Classes");
+        $this->response->assertSeeText("Next class:");
     }
 }

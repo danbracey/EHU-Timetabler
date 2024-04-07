@@ -1,3 +1,3 @@
-<select name="degree" id="degree" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
+<select {!! $attributes->merge(['name' => '', 'class' => "border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"]) !!}>
     {{$slot}}
 </select>

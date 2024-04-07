@@ -23,7 +23,7 @@
                             @foreach($Students as $Student)
                                 <tr>
                                     <td><a href="{{route('student.show', $Student->id)}}">{{strtoupper($Student->last_name)}}, {{$Student->first_name}}</a></td>
-                                    <td><a href="{{route('degree.show', $Student->getDegree->id)}}">{{$Student->getDegree->friendly_name}}</a></td>
+                                    <td><a href="{{route('degree.show', $Student->degree->id)}}">{{$Student->degree->friendly_name}}</a></td>
                                 </tr>
                             @endforeach
                         </tbody>

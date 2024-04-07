@@ -27,7 +27,7 @@
                 <!-- Degree -->
                 <div>
                     <x-input-label for="degree" :value="__('Degree')" />
-                    <x-select class="w-full">
+                    <x-select name="degree" class="w-full">
                         @foreach($Degrees as $Degree)
                             <option value="{{$Degree->id}}">{{$Degree->id}} - {{$Degree->friendly_name}}</option>
                         @endforeach

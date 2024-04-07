@@ -11,7 +11,7 @@
 
 
     <section>
-        <p class="max-w-7xl mx-auto sm:px-6 lg:px-8">{{$Student->first_name}} is on <a href="{{route('degree.show', $Student->getDegree->id)}}">{!! $Student->getDegree->friendly_name !!}</a></p>
+        <p class="max-w-7xl mx-auto sm:px-6 lg:px-8">{{$Student->first_name}} is on <a href="{{route('degree.show', $Student->degree->id)}}">{!! $Student->degree->friendly_name !!}</a></p>
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <h2 class="text-3xl">Student's Modules:</h2>
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">

@@ -26,7 +26,7 @@ class Degree extends Model
      */
     public function modules(): BelongsToMany
     {
-        return $this->belongsToMany(Module::class, 'degree_module', 'degree_id', 'module_id');
+        return $this->belongsToMany(Module::class, 'degree_module', 'degree_id', 'module_id')->with('timeslots');
     }
 
     /**

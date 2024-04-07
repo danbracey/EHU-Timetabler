@@ -16,7 +16,7 @@ return new class extends Migration
     {
         Schema::create('degree_module', function (Blueprint $table) {
             $table->string('degree_id');
-            $table->integer('module_id');
+            $table->unsignedBigInteger('module_id');
             $table->timestamps();
 
             //Create composite key

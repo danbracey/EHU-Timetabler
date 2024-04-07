@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ModuleRequest;
 use App\Models\Degree;
 use App\Models\Module;
+use App\Models\Timeslot;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -38,6 +39,11 @@ class ModuleController extends Controller
      */
     public function store(ModuleRequest $request): RedirectResponse
     {
+        Validator::make((array)$request, [
+            'id' => [
+                Rule::unique('modules'),
+            ],
+        ]);
         $validated = $request->validated();
 
         $module = new Module();
