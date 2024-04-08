@@ -1,6 +1,6 @@
 <x-staff-layout>
     <x-slot name="header">
-        {{ $Module->id }}: {{ $Module->friendly_name }}
+        CIS{{ $Module->id }}: {{ $Module->friendly_name }}
         <div>
             <a href="{{route('module.edit', $Module->id)}}"><x-secondary-button>Edit Module</x-secondary-button></a>
             <a href="{{route('module.timeslot.create', $Module->id)}}"><x-secondary-button>Manual Timeslot</x-secondary-button></a>

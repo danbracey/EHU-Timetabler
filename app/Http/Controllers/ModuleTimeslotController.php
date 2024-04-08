@@ -33,7 +33,7 @@ class ModuleTimeslotController extends Controller
         $validated = $request->validated();
         $conflict = $this->checkConflict($module, $validated);
 
-        if ($conflict) {
+        if ($conflict->isNotEmpty()) {
             throw ValidationException::withMessages(
                 ['clashes' => $conflict]
             );
@@ -113,14 +113,13 @@ class ModuleTimeslotController extends Controller
 //                    ->orWhere('start_time', '>=', $validated['end_time']);
 //            })
 //            ->count();
-
         return Timeslot::where('room_id', '=', $validated['room_id'])
             ->where('day_of_week', '=', $validated['day_of_week'])
             ->where(function ($query) use ($validated) {
                 $query->where('start_time', '<', $validated['end_time'])
                     ->where('end_time', '>', $validated['start_time']);
             })
-            ->orWhere('module_id', '=', $module->__get('id'))
+            ->where('module_id', '=', $module->__get('id'))
             ->get();
     }
 }
