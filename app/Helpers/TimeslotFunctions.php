@@ -2,6 +2,9 @@
 
 namespace App\Helpers;
 
+use App\Models\Degree;
+use App\Models\Timeslot;
+
 class TimeslotFunctions
 {
     public static function parseDay($day): string
@@ -43,5 +46,51 @@ class TimeslotFunctions
         }
 
         return $next_timeslot;
+    }
+
+    public static function checkConflict($module, $validated)
+    {
+        //Check conflict and reject
+
+//        return Timeslot::where('room_id', '=', $validated['room_id'])
+//            ->where('day_of_week', '=', $validated['day_of_week'])
+//            ->orWhere('module_id', '=', $module->__get('id'))
+//            ->whereNot(function ($query) use ($validated) {
+//                $query->where('end_time', '<=', $validated['start_time'])
+//                    ->orWhere('start_time', '>=', $validated['end_time']);
+//            })
+//            ->count();
+        return Timeslot::where('room_id', '=', $validated['room_id'])
+            ->where('day_of_week', '=', $validated['day_of_week'])
+            ->where(function ($query) use ($validated) {
+                $query->where('start_time', '<', $validated['end_time'])
+                    ->where('end_time', '>', $validated['start_time']);
+            })
+            ->orWhere('module_id', '=', $module->__get('id'))
+            ->get();
+    }
+
+    /** Automatic Timetable Generation */
+    //Starting in PHP for proof of concept before optimising
+    public static function generateTimetable(bool $truncate)
+    {
+        $degrees = Degree::all();
+
+        if ($truncate) {
+            Timeslot::truncate();
+        }
+
+//        $degreeCodes = [];
+//        foreach ($degrees as $degree) {
+//            $degreeCodes[] = $degree->code;
+//        }
+
+        foreach ($degrees as $degree) {
+            $modules = $degree->modules;
+
+            foreach ($modules as $module) {
+                //We need to know how many lectures and classes to schedule per week
+            }
+        }
     }
 }
