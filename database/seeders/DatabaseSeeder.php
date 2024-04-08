@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Room;
+use App\Models\Student;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -29,11 +30,11 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             DegreeSeeder::class,
-            StudentSeeder::class,
             ModuleSeeder::class,
             DegreeModuleSeeder::class,
             BuildingSeeder::class,
-            RoomSeeder::class
+            RoomSeeder::class,
+//            StudentSeeder::class /** Uncomment if running locally */
         ]);
     }
 }
