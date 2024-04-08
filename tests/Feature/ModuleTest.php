@@ -161,7 +161,7 @@ class ModuleTest extends TestCase
         $module = Module::factory()->createOne();
         $room = Room::factory()->createOne();
         $timeslot = Timeslot::factory()->createOne();
-        $dayOfWeek = rand(0,6);
+        $dayOfWeek = rand(1,5);
 
         $response = $this->actingAs($this->user)->patch(route('module.timeslot.update', [$module->__get('id'), $timeslot->__get('id')]), [
             'module_id' => $module->__get('id'),

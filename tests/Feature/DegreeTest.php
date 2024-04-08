@@ -51,7 +51,8 @@ class DegreeTest extends TestCase
         $response = $this->actingAs($this->user)->post(route('degree.store'), [
             'code' => 'W4D7',
             'friendly_name' => 'Web Design & Development',
-            'graduation_year' => 2027
+            'graduation_year' => 2027,
+            'modules' => []
         ]);
 
         $response->assertRedirect();
@@ -72,7 +73,8 @@ class DegreeTest extends TestCase
         $response = $this->actingAs($this->user)->patch(route('degree.update', $degree->__get('id')), [
             'code' => 'W000',
             'friendly_name' => 'Web Development & Design',
-            'graduation_year' => 2027
+            'graduation_year' => 2027,
+            'modules' => []
         ]);
 
         $degree = Degree::where('code', '=', 'W000')->firstOrFail();
