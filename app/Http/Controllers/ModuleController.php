@@ -58,10 +58,23 @@ class ModuleController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id): View
+    public function show(Module $module): View
     {
+        $events = [];
+        foreach ($module->timeslots as $timeslot) {
+            $events[] = [
+                'id' => $timeslot->id,
+                'title' => "CIS" . $timeslot->module_id . " (Rm: " . $timeslot->room_id . ")",
+                'startTime' => $timeslot->start_time,
+                'endTime' => $timeslot->end_time,
+                'daysOfWeek' => [$timeslot->day_of_week],
+                'allDay' => false,
+            ];
+        }
+
         return view('module.show', [
-            'Module' => Module::where('id', '=', $id)->firstOrFail()
+            'Module' => $module,
+            'timeslots' => $events
         ]);
     }
 

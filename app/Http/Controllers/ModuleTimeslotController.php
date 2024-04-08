@@ -119,7 +119,7 @@ class ModuleTimeslotController extends Controller
                 $query->where('start_time', '<', $validated['end_time'])
                     ->where('end_time', '>', $validated['start_time']);
             })
-            ->where('module_id', '=', $module->__get('id'))
+            ->orWhere('module_id', '=', $module->__get('id'))
             ->get();
     }
 }
