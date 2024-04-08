@@ -25,7 +25,7 @@ Route::resource('/module/{module}/timeslot', \App\Http\Controllers\ModuleTimeslo
     ->names('module.timeslot');
 Route::resource('/building', \App\Http\Controllers\BuildingController::class)->middleware('auth');
 Route::resource('/building/{building}/room', \App\Http\Controllers\RoomController::class)->middleware('auth')->except([
-    'index', 'show'
+    'index'
 ]);
 
 require __DIR__ . '/auth.php';

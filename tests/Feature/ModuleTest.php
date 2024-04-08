@@ -106,7 +106,6 @@ class ModuleTest extends TestCase
         $response = $this->actingAs($this->user)->put(route('module.update', $module->__get('id')), [
             'id' => $module->__get('id'),
             'friendly_name' => 'Different Module',
-            'academic_year' => '23/24',
             'degrees' => []
         ]);
 
@@ -119,7 +118,6 @@ class ModuleTest extends TestCase
 
         // Assert against the updated values
         $this->assertSame('Different Module', $module->__get('friendly_name'));
-        $this->assertSame('23/24', $module->__get('academic_year'));
     }
 
     public function test_module_can_be_deleted(): void
@@ -163,7 +161,7 @@ class ModuleTest extends TestCase
         $module = Module::factory()->createOne();
         $room = Room::factory()->createOne();
         $timeslot = Timeslot::factory()->createOne();
-        $dayOfWeek = rand(0,6);
+        $dayOfWeek = rand(1,5);
 
         $response = $this->actingAs($this->user)->patch(route('module.timeslot.update', [$module->__get('id'), $timeslot->__get('id')]), [
             'module_id' => $module->__get('id'),

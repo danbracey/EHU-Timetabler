@@ -19,13 +19,6 @@
                 <x-input-error :messages="$errors->get('friendly_name')" class="mt-2" />
             </div>
 
-            <!-- Academic year -->
-            <div class="mt-2">
-                <x-input-label for="academic_year" :value="__('Academic Year')" />
-                <x-text-input id="academic_year" class="block mt-1 w-full" type="text" name="academic_year" value="{{old('academic_year') ?? $Module->academic_year}}" required autofocus autocomplete="off" />
-                <x-input-error :messages="$errors->get('academic_year')" class="mt-2" />
-            </div>
-
             <div class="mt-2">
                 <span>Degrees this Module is on:</span><br/>
                 @foreach($Degrees as $Degree)

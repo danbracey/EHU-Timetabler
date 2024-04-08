@@ -4,11 +4,11 @@
                 @method('PATCH')
                 @csrf
 
-                <!-- ID -->
+                <!-- UCAS Code -->
                 <div>
-                    <x-input-label for="id" :value="__('UCAS Code / ID')" />
-                    <x-text-input id="id" class="block mt-1 w-full" type="text" name="id" value="{{$Degree->id}}" required autofocus autocomplete="off" />
-                    <x-input-error :messages="$errors->get('id')" class="mt-2" />
+                    <x-input-label for="code" :value="__('UCAS Code')" />
+                    <x-text-input id="code" class="block mt-1 w-full" type="text" name="code" value="{{$Degree->code}}" required autofocus autocomplete="off" />
+                    <x-input-error :messages="$errors->get('code')" class="mt-2" />
                 </div>
 
                 <!-- Friendly Name -->
@@ -16,6 +16,21 @@
                     <x-input-label for="friendly_name" :value="__('Friendly name')" />
                     <x-text-input id="friendly_name" class="block mt-1 w-full" type="text" name="friendly_name" value="{{$Degree->friendly_name}}" required autofocus autocomplete="off" />
                     <x-input-error :messages="$errors->get('friendly_name')" class="mt-2" />
+                </div>
+
+                <!-- Graduation Year -->
+                <div>
+                    <x-input-label for="graduation_year" :value="__('Graduation year')" />
+                    <x-text-input id="graduation_year" class="block mt-1 w-full" type="number" name="graduation_year" value="{{$Degree->graduation_year}}" required autofocus autocomplete="off" placeholder="2027" />
+                    <x-input-error :messages="$errors->get('graduation_year')" class="mt-2" />
+                </div>
+
+                <div class="mt-2">
+                    <span>Modules this Degree is on:</span><br/>
+                    @foreach($Modules as $Module)
+                        <input type="checkbox" name="modules[]" id="{{$Module->id}}" value="{{$Module->id}}" @if($Degree->modules->contains($Module)) checked @endif/>
+                        <label for="{{$Module->id}}">CIS{{$Module->id}}: {{$Module->friendly_name}}</label><br/>
+                    @endforeach
                 </div>
 
                 <div class="flex items-center justify-end mt-4">

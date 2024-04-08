@@ -47,7 +47,26 @@ class RoomController extends Controller
     /**
      * Display the specified resource.
      */
-    // No show route necessary for Rooms, accessed via Buildings (Estates)
+    public function show(Building $building, Room $room): \Illuminate\View\View
+    {
+        $events = [];
+        foreach ($room->timeslots as $timeslot) {
+            $events[] = [
+                'id' => $timeslot->id,
+                'title' => "CIS" . $timeslot->module_id . " (Rm: " . $timeslot->room_id . ")",
+                'startTime' => $timeslot->start_time,
+                'endTime' => $timeslot->end_time,
+                'daysOfWeek' => [$timeslot->day_of_week],
+                'allDay' => false,
+            ];
+        }
+
+        return view('estates.room.show', [
+            'Building' => $building,
+            'Room' => $room,
+            'timeslots' => $events
+        ]);
+    }
 
     /**
      * Show the form for editing the specified resource.

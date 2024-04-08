@@ -29,7 +29,7 @@ class StudentRequest extends FormRequest
             'id' => ['numeric', 'digits:8'],
             'first_name' => 'string|max:30',
             'last_name' => 'string|max:30',
-            'degree' => 'string|exists:degrees,id'
+            'degree' => 'numeric|exists:degrees,id'
         ];
     }
 }

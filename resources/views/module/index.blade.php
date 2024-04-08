@@ -23,7 +23,7 @@
                             @foreach($Modules as $Module)
                                 <tr>
                                     <td><a href="{{route('module.show', $Module->id)}}">{{$Module->friendly_name}}</a></td>
-                                    <td></td>
+                                    <td>{{$Module->degrees->pluck('friendly_name')->implode(', ') }}</td>
                                 </tr>
                             @endforeach
                         </tbody>

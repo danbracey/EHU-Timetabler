@@ -36,7 +36,7 @@
                         @endif
                     @endforeach
                 </x-select>
-                <x-input-error :messages="$errors->get('last_name')" class="mt-2" />
+                <x-input-error :messages="$errors->get('degree')" class="mt-2" />
             </div>
 
             <div class="flex items-center justify-end mt-4">

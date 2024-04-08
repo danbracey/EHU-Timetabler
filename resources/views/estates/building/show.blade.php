@@ -16,7 +16,7 @@
             <ul class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 @foreach($Building->rooms as $Room)
                     <li>
-                        <a href="{{route('room.edit', [$Building->id, $Room->id])}}">
+                        <a href="{{route('room.show', [$Building->id, $Room->id])}}">
                             {{$Room->id}}
                             (Seats: {{$Room->available_seats}})
                             (Available Computers: {{$Room->available_computers}})

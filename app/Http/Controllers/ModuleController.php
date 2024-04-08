@@ -49,8 +49,8 @@ class ModuleController extends Controller
         $module = new Module();
         $module->setAttribute('id', $validated['id']);
         $module->setAttribute('friendly_name', $validated['friendly_name']);
-        $module->setAttribute('academic_year', $validated['academic_year']);
         $module->save();
+        $module->degrees()->sync($validated['degrees']);
 
         return redirect(route('module.show', $validated['id']));
     }
@@ -58,10 +58,23 @@ class ModuleController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id): View
+    public function show(Module $module): View
     {
+        $events = [];
+        foreach ($module->timeslots as $timeslot) {
+            $events[] = [
+                'id' => $timeslot->id,
+                'title' => "CIS" . $timeslot->module_id . " (Rm: " . $timeslot->room_id . ")",
+                'startTime' => $timeslot->start_time,
+                'endTime' => $timeslot->end_time,
+                'daysOfWeek' => [$timeslot->day_of_week],
+                'allDay' => false,
+            ];
+        }
+
         return view('module.show', [
-            'Module' => Module::where('id', '=', $id)->firstOrFail()
+            'Module' => $module,
+            'timeslots' => $events
         ]);
     }
 
@@ -92,7 +105,6 @@ class ModuleController extends Controller
         $module = Module::where('id', '=', $id)->firstOrFail();
         $module->setAttribute('id', $validated['id']);
         $module->setAttribute('friendly_name', $validated['friendly_name']);
-        $module->setAttribute('academic_year', $validated['academic_year']);
         $module->degrees()->sync($validated['degrees']);
         $module->update();
 
