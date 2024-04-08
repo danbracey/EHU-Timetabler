@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('modules', function (Blueprint $table) {
             $table->id();
             $table->string('friendly_name');
+            $table->integer('lectures_per_week');
+            $table->integer('seminars_per_week');
             $table->timestamps();
         });
     }

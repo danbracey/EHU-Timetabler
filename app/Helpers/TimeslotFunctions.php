@@ -4,6 +4,8 @@ namespace App\Helpers;
 
 use App\Models\Degree;
 use App\Models\Timeslot;
+use Illuminate\Support\Facades\Log;
+use Ramsey\Uuid\Type\Time;
 
 class TimeslotFunctions
 {
@@ -68,29 +70,5 @@ class TimeslotFunctions
             })
             ->orWhere('module_id', '=', $module->__get('id'))
             ->get();
-    }
-
-    /** Automatic Timetable Generation */
-    //Starting in PHP for proof of concept before optimising
-    public static function generateTimetable(bool $truncate)
-    {
-        $degrees = Degree::all();
-
-        if ($truncate) {
-            Timeslot::truncate();
-        }
-
-//        $degreeCodes = [];
-//        foreach ($degrees as $degree) {
-//            $degreeCodes[] = $degree->code;
-//        }
-
-        foreach ($degrees as $degree) {
-            $modules = $degree->modules;
-
-            foreach ($modules as $module) {
-                //We need to know how many lectures and classes to schedule per week
-            }
-        }
     }
 }
