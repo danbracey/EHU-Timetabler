@@ -69,29 +69,36 @@ class GenerateTimetable implements ShouldQueue
         // Order rooms by Tech Hub
         /** Soft requirement, come back to this - For now we don't care where the assigned rooms are. */
 
-        for ($day = 1; $day <= 5; $day++) {
-            for ($i = 9; $i <= 16; $i++) {
-                $conflict = TimeslotFunctions::checkConflict($module, [
-                    'room_id' => $roomStack->first()->id, //Taking the first element from the stack
-                    'day_of_week' => $day,
-                    'start_time' => $i . ':00:00',
-                    'end_time' => $i + 1 . ':00:00',
-                    'module_id' => $module->id
-                ]);
+//        for ($day = 1; $day < 6; $day++) { //Between Mon - Friday
+//            for ($i = 9; $i < 17; $i++) { //Between 9am and 5pm
+//
+//            }
+//        }
 
-                if (isEmpty($conflict)) {
-                    $timeslot = new Timeslot();
-                    $timeslot->module_id = $module->id;
-                    $timeslot->room_id = $roomStack->first()->id;
-                    $timeslot->day_of_week = $day;
-                    $timeslot->start_time = $i . ':00:00';
-                    $timeslot->end_time = $i + 1 . ':00:00';
-                    $timeslot->is_lecture = $is_lecture;
-                    $timeslot->save();
-                }
-            }
+        $day = rand(1, 6);
+        $time = rand(9, 17);
+
+        $conflict = TimeslotFunctions::checkConflict($module, [
+            'room_id' => $roomStack->first()->id, //Taking the first element from the stack
+            'day_of_week' => $day,
+            'start_time' => $time . ':00:00',
+            'end_time' => $time + 1 . ':00:00',
+            'module_id' => $module->id
+        ]);
+
+        if (isEmpty($conflict)) {
+            $timeslot = new Timeslot();
+            $timeslot->module_id = $module->id;
+            $timeslot->room_id = $roomStack->first()->id;
+            $timeslot->day_of_week = $day;
+            $timeslot->start_time = $time . ':00:00';
+            $timeslot->end_time = $time + 1 . ':00:00';
+            $timeslot->is_lecture = $is_lecture;
+            $timeslot->save();
+
+            //Remove first element in room stack
+            $roomStack->forget($roomStack->first()->id);
         }
-
 
 
         //TODO: look @ algorithm flow on Miro
