@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Degree extends Model
 {
@@ -33,8 +34,8 @@ class Degree extends Model
      * Returns relation of all students on this degree
      * @return void
      */
-    public function getStudents()
+    public function students(): HasMany
     {
-        //Relation goes here
+        return $this->hasMany(Student::class, 'degree_id', 'id');
     }
 }

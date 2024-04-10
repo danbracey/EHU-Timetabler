@@ -28,4 +28,6 @@ Route::resource('/building/{building}/room', \App\Http\Controllers\RoomControlle
     'index'
 ]);
 
+Route::get('/generate', [\App\Helpers\TimeslotFunctions::class, 'generateTimetable'])->name('timetable.generate');
+
 require __DIR__ . '/auth.php';

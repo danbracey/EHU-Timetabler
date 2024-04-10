@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use App\Jobs\GenerateTimetable;
 use App\Models\Degree;
 use App\Models\Timeslot;
 use Illuminate\Support\Facades\Log;
@@ -70,5 +71,15 @@ class TimeslotFunctions
             })
             ->orWhere('module_id', '=', $module->__get('id'))
             ->get();
+    }
+
+    public static function generateTimetable(): void
+    {
+        try {
+            GenerateTimetable::dispatch();
+        } catch (\Exception $exception) {
+            dd($exception);
+        }
+
     }
 }
