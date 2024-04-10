@@ -80,6 +80,5 @@ class TimeslotFunctions
         } catch (\Exception $exception) {
             dd($exception);
         }
-
     }
 }

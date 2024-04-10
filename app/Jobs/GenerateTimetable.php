@@ -51,7 +51,11 @@ class GenerateTimetable implements ShouldQueue
                 if ($module->lectures_per_week + $module->seminars_per_week > $module_timeslots->count()) {
                     //Handle lectures first
                     for ($i = 0; $i < $module->lectures_per_week; $i++) {
-                        // CHANGED TRUE TO FALSE FOR DEBUG - CHANGE BACK!
+                        $this->assignTimeslot($module, true, $degree);
+                    }
+
+                    //Handle seminars
+                    for ($i = 0; $i < $module->seminars_per_week; $i++) {
                         $this->assignTimeslot($module, false, $degree);
                     }
                 } else {
@@ -66,6 +70,10 @@ class GenerateTimetable implements ShouldQueue
         $roomStack = Room::where('is_lecture_hall', '=', $is_lecture ? 1 : 0)
             ->where('available_seats', '>', $degree->students->count())
             ->get();
+
+        if (! $roomStack) {
+            abort(500, "No" . $is_lecture ? "lecture" : "seminar" . " rooms left in stack!");
+        }
         // Order rooms by Tech Hub
         /** Soft requirement, come back to this - For now we don't care where the assigned rooms are. */
 
@@ -74,6 +82,8 @@ class GenerateTimetable implements ShouldQueue
 //
 //            }
 //        }
+
+        //dd($module);
 
         $day = rand(1, 6);
         $time = rand(9, 17);

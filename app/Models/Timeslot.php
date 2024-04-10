@@ -11,19 +11,6 @@ class Timeslot extends Model
 {
     use HasFactory;
 
-    public int $module_id;
-    public int $room_id;
-    public int $day_of_week;
-    /**
-     * @var mixed
-     */
-    public mixed $start_time;
-    public mixed $end_time;
-    /**
-     * @var bool
-     */
-    public bool $is_lecture;
-
 
     protected $table = 'module_timeslot';
 
