@@ -85,8 +85,8 @@ class GenerateTimetable implements ShouldQueue
 
         //dd($module);
 
-        $day = rand(1, 6);
-        $time = rand(9, 17);
+        $day = rand(1, 5);
+        $time = rand(9, 16);
 
         $conflict = TimeslotFunctions::checkConflict($module, [
             'room_id' => $roomStack->first()->id, //Taking the first element from the stack
@@ -109,8 +109,5 @@ class GenerateTimetable implements ShouldQueue
             //Remove first element in room stack
             $roomStack->forget($roomStack->first()->id);
         }
-
-
-        //TODO: look @ algorithm flow on Miro
     }
 }
