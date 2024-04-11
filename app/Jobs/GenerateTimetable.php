@@ -74,6 +74,7 @@ class GenerateTimetable implements ShouldQueue
         if (! $roomStack) {
             abort(500, "No" . $is_lecture ? "lecture" : "seminar" . " rooms left in stack!");
         }
+
         // Order rooms by Tech Hub
         /** Soft requirement, come back to this - For now we don't care where the assigned rooms are. */
 
