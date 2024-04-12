@@ -5,6 +5,7 @@ namespace App\Helpers;
 use App\Jobs\GenerateTimetable;
 use App\Models\Degree;
 use App\Models\Timeslot;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Log;
 use Ramsey\Uuid\Type\Time;
 
@@ -73,10 +74,11 @@ class TimeslotFunctions
             ->get();
     }
 
-    public static function generateTimetable(): void
+    public static function generateTimetable(): RedirectResponse
     {
         try {
             GenerateTimetable::dispatch();
+            return redirect(route('dashboard'));
         } catch (\Exception $exception) {
             dd($exception);
         }

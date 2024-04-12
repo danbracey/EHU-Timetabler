@@ -67,13 +67,15 @@ class GenerateTimetable implements ShouldQueue
 
     private function assignTimeslot(mixed $module, bool $is_lecture, Degree $degree)
     {
-        $roomStack = Room::where('is_lecture_hall', '=', $is_lecture ? 1 : 0)
+        $roomStack = Room::where('is_lecture_hall', '=', $is_lecture)
             ->where('available_seats', '>', $degree->students->count())
             ->get();
 
-        if (! $roomStack) {
-            abort(500, "No" . $is_lecture ? "lecture" : "seminar" . " rooms left in stack!");
-        }
+        //dd($roomStack);
+
+//        if (isEmpty($roomStack)) {
+//            abort(500, "No rooms left in stack!");
+//        }
 
         // Order rooms by Tech Hub
         /** Soft requirement, come back to this - For now we don't care where the assigned rooms are. */
