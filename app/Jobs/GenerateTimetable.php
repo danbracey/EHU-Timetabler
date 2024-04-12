@@ -93,7 +93,7 @@ class GenerateTimetable implements ShouldQueue
             'module_id' => $module->id
         ]);
 
-        if (isEmpty($conflict)) {
+        if ($conflict->isEmpty()) {
             $timeslot = new Timeslot();
             $timeslot->module_id = $module->id;
             $timeslot->room_id = $roomStack->first()->id;
@@ -105,8 +105,6 @@ class GenerateTimetable implements ShouldQueue
 
             //Remove first element in room stack
             $roomStack->forget($roomStack->first()->id);
-        } else {
-            $this->assignTimeslot($module, $is_lecture, $degree);
         }
     }
 }

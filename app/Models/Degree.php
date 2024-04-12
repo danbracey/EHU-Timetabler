@@ -32,7 +32,7 @@ class Degree extends Model
 
     /**
      * Returns relation of all students on this degree
-     * @return void
+     * @return HasMany
      */
     public function students(): HasMany
     {
