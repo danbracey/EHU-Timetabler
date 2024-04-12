@@ -19,6 +19,22 @@
                 <x-input-error :messages="$errors->get('friendly_name')" class="mt-2" />
             </div>
 
+            <aside class="flex gap-2 flex-col md:flex-row">
+                <!-- Lectures per week -->
+                <div class="mt-5">
+                    <x-input-label for="lectures_per_week" :value="__('Lectures per week')" />
+                    <x-text-input id="lectures_per_week" class="block mt-1" type="number" name="lectures_per_week" value="{{old('lectures_per_week') ?? $Module->lectures_per_week}}" required autofocus autocomplete="off" />
+                    <x-input-error :messages="$errors->get('lectures_per_week')" class="mt-2" />
+                </div>
+
+                <!-- Seminars per week -->
+                <div class="mt-5">
+                    <x-input-label for="seminars_per_week" :value="__('Seminars per week')" />
+                    <x-text-input id="seminars_per_week" class="block mt-1" type="number" name="seminars_per_week" value="{{old('seminars_per_week') ?? $Module->seminars_per_week}}" required autofocus autocomplete="off" />
+                    <x-input-error :messages="$errors->get('seminars_per_week')" class="mt-2" />
+                </div>
+            </aside>
+
             <div class="mt-2">
                 <span>Degrees this Module is on:</span><br/>
                 @foreach($Degrees as $Degree)

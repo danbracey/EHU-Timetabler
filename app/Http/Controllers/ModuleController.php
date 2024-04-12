@@ -49,6 +49,8 @@ class ModuleController extends Controller
         $module = new Module();
         $module->setAttribute('id', $validated['id']);
         $module->setAttribute('friendly_name', $validated['friendly_name']);
+        $module->setAttribute('seminars_per_week', $validated['seminars_per_week']);
+        $module->setAttribute('lectures_per_week', $validated['lectures_per_week']);
         $module->save();
         $module->degrees()->sync($validated['degrees']);
 
@@ -105,6 +107,8 @@ class ModuleController extends Controller
         $module = Module::where('id', '=', $id)->firstOrFail();
         $module->setAttribute('id', $validated['id']);
         $module->setAttribute('friendly_name', $validated['friendly_name']);
+        $module->setAttribute('seminars_per_week', $validated['seminars_per_week']);
+        $module->setAttribute('lectures_per_week', $validated['lectures_per_week']);
         $module->degrees()->sync($validated['degrees']);
         $module->update();
 
