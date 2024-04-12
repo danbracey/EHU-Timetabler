@@ -71,12 +71,6 @@ class GenerateTimetable implements ShouldQueue
             ->where('available_seats', '>', $degree->students->count())
             ->get();
 
-        //dd($roomStack);
-
-//        if (isEmpty($roomStack)) {
-//            abort(500, "No rooms left in stack!");
-//        }
-
         // Order rooms by Tech Hub
         /** Soft requirement, come back to this - For now we don't care where the assigned rooms are. */
 
@@ -111,6 +105,8 @@ class GenerateTimetable implements ShouldQueue
 
             //Remove first element in room stack
             $roomStack->forget($roomStack->first()->id);
+        } else {
+            $this->assignTimeslot($module, $is_lecture, $degree);
         }
     }
 }
