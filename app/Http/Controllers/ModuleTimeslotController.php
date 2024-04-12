@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\TimeslotFunctions;
 use App\Http\Requests\TimeslotRequest;
 use App\Models\Module;
 use App\Models\Room;
@@ -31,7 +32,7 @@ class ModuleTimeslotController extends Controller
     public function store(Module $module, TimeslotRequest $request): RedirectResponse
     {
         $validated = $request->validated();
-        $conflict = $this->checkConflict($module, $validated);
+        $conflict = TimeslotFunctions::checkConflict($module, $validated);
 
         if ($conflict->isNotEmpty()) {
             throw ValidationException::withMessages(
@@ -99,27 +100,5 @@ class ModuleTimeslotController extends Controller
         $timeslot->setAttribute('start_time', $validated['start_time']);
         $timeslot->setAttribute('end_time', $validated['end_time']);
         $timeslot->setAttribute('is_lecture', $request->__get('is_lecture') ? 1 : 0);
-    }
-
-    public function checkConflict($module, $validated)
-    {
-        //Check conflict and reject
-
-//        return Timeslot::where('room_id', '=', $validated['room_id'])
-//            ->where('day_of_week', '=', $validated['day_of_week'])
-//            ->orWhere('module_id', '=', $module->__get('id'))
-//            ->whereNot(function ($query) use ($validated) {
-//                $query->where('end_time', '<=', $validated['start_time'])
-//                    ->orWhere('start_time', '>=', $validated['end_time']);
-//            })
-//            ->count();
-        return Timeslot::where('room_id', '=', $validated['room_id'])
-            ->where('day_of_week', '=', $validated['day_of_week'])
-            ->where(function ($query) use ($validated) {
-                $query->where('start_time', '<', $validated['end_time'])
-                    ->where('end_time', '>', $validated['start_time']);
-            })
-            ->orWhere('module_id', '=', $module->__get('id'))
-            ->get();
     }
 }

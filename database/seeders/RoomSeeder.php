@@ -69,6 +69,13 @@ use Illuminate\Database\Seeder;
             'building' => $this->building->id
         ]);
         Room::factory()->create([
+            'id' => 'THG08',
+            'available_seats' => 60,
+            'available_computers' => 0,
+            'is_lecture_hall' => 1,
+            'building' => $this->building->id
+        ]);
+        Room::factory()->create([
             'id' => 'THG05',
             'available_seats' => 30,
             'available_computers' => 30,

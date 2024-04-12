@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\TimeslotFunctions;
+use App\Models\Module;
 use App\Models\Student;
 use Carbon\Carbon;
 use DateTime;
@@ -59,5 +60,27 @@ class HomeController extends Controller
         } else {
             return view('welcome');
         }
+    }
+
+    public function dashboard(): View
+    {
+        $modules = Module::all();
+        $events = [];
+        foreach ($modules as $module) {
+            foreach ($module->timeslots as $timeslot) {
+                $events[] = [
+                    'id' => $timeslot->id,
+                    'title' => "CIS" . $timeslot->module_id . " (Rm: " . $timeslot->room_id . ")",
+                    'startTime' => $timeslot->start_time,
+                    'endTime' => $timeslot->end_time,
+                    'daysOfWeek' => [$timeslot->day_of_week],
+                    'allDay' => false,
+                ];
+            }
+        }
+
+        return view('dashboard', [
+            'timeslots' => $events,
+        ]);
     }
 }

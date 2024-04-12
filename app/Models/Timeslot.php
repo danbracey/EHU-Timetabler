@@ -11,6 +11,7 @@ class Timeslot extends Model
 {
     use HasFactory;
 
+
     protected $table = 'module_timeslot';
 
     public function module(): BelongsTo

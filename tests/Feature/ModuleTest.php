@@ -57,15 +57,20 @@ class ModuleTest extends TestCase
     /**
      * Test module creation page can be created
      * @return void
+     * @throws JsonException
      */
     public function test_module_can_be_created(): void
     {
         $response = $this->actingAs($this->user)->post(route('module.store'), [
-            'id' => 'CIS' . rand(0000, 3999),
+            'id' => rand(0000, 3999),
             'friendly_name' => 'Example Module',
             'academic_year' => '23/24',
+            'lectures_per_week' => 5,
+            'seminars_per_week' => 6,
+            'degrees' => []
         ]);
 
+        $response->assertSessionHasNoErrors();
         $response->assertRedirect();
     }
 
@@ -106,6 +111,8 @@ class ModuleTest extends TestCase
         $response = $this->actingAs($this->user)->put(route('module.update', $module->__get('id')), [
             'id' => $module->__get('id'),
             'friendly_name' => 'Different Module',
+            'lectures_per_week' => 5,
+            'seminars_per_week' => 6,
             'degrees' => []
         ]);
 

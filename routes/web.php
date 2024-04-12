@@ -6,9 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('index');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [HomeController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -27,5 +25,7 @@ Route::resource('/building', \App\Http\Controllers\BuildingController::class)->m
 Route::resource('/building/{building}/room', \App\Http\Controllers\RoomController::class)->middleware('auth')->except([
     'index'
 ]);
+
+Route::get('/generate', [\App\Helpers\TimeslotFunctions::class, 'generateTimetable'])->name('timetable.generate');
 
 require __DIR__ . '/auth.php';

@@ -18,7 +18,9 @@ class ModuleFactory extends Factory
     {
         return [
             'id' => rand(1000, 3999),
-            'friendly_name' => fake()->realText()
+            'friendly_name' => fake()->realText(),
+            'lectures_per_week' => 1,
+            'seminars_per_week' => 1
         ];
     }
 }

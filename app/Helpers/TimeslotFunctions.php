@@ -2,6 +2,13 @@
 
 namespace App\Helpers;
 
+use App\Jobs\GenerateTimetable;
+use App\Models\Degree;
+use App\Models\Timeslot;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Log;
+use Ramsey\Uuid\Type\Time;
+
 class TimeslotFunctions
 {
     public static function parseDay($day): string
@@ -43,5 +50,37 @@ class TimeslotFunctions
         }
 
         return $next_timeslot;
+    }
+
+    public static function checkConflict($module, $validated)
+    {
+        //Check conflict and reject
+
+//        return Timeslot::where('room_id', '=', $validated['room_id'])
+//            ->where('day_of_week', '=', $validated['day_of_week'])
+//            ->orWhere('module_id', '=', $module->__get('id'))
+//            ->whereNot(function ($query) use ($validated) {
+//                $query->where('end_time', '<=', $validated['start_time'])
+//                    ->orWhere('start_time', '>=', $validated['end_time']);
+//            })
+//            ->count();
+        return Timeslot::where('room_id', '=', $validated['room_id'])
+            ->where('day_of_week', '=', $validated['day_of_week'])
+            ->where(function ($query) use ($validated) {
+                $query->where('start_time', '<', $validated['end_time'])
+                    ->where('end_time', '>', $validated['start_time']);
+            })
+            ->orWhere('module_id', '=', $module->__get('id'))
+            ->get();
+    }
+
+    public static function generateTimetable(): RedirectResponse
+    {
+        try {
+            GenerateTimetable::dispatch();
+            return redirect(route('dashboard'));
+        } catch (\Exception $exception) {
+            dd($exception);
+        }
     }
 }

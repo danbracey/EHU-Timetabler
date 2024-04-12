@@ -26,6 +26,8 @@ class ModuleRequest extends FormRequest
             'id' => 'integer|digits:4',
             'friendly_name' => 'string|max:255',
             'academic_year' => ['string', 'regex:/\d{2}\/\d{2}/'],
+            'seminars_per_week' => 'numeric',
+            'lectures_per_week' => 'numeric',
             'degrees' => 'array'
         ];
     }
