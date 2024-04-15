@@ -14,6 +14,7 @@ class DegreeModuleSeeder extends Seeder
      */
     public function run(): void
     {
+        //Attach computer science modules
         DB::table('degree_module')->insert([
             'degree_id' => Degree::where('code', '=', 'CS12')->first()->id,
             'module_id' => 1701
@@ -49,6 +50,26 @@ class DegreeModuleSeeder extends Seeder
         DB::table('degree_module')->insert([
             'degree_id' => Degree::where('code', '=', 'CS12')->first()->id,
             'module_id' => 2712
+        ]);
+        DB::table('degree_module')->insert([
+            'degree_id' => Degree::where('code', '=', 'CS12')->first()->id,
+            'module_id' => 3140
+        ]);
+        DB::table('degree_module')->insert([
+            'degree_id' => Degree::where('code', '=', 'CS12')->first()->id,
+            'module_id' => 3159
+        ]);
+        DB::table('degree_module')->insert([
+            'degree_id' => Degree::where('code', '=', 'CS12')->first()->id,
+            'module_id' => 3401
+        ]);
+        DB::table('degree_module')->insert([
+            'degree_id' => Degree::where('code', '=', 'CS12')->first()->id,
+            'module_id' => 3415
+        ]);
+        DB::table('degree_module')->insert([
+            'degree_id' => Degree::where('code', '=', 'CS12')->first()->id,
+            'module_id' => 3421
         ]);
     }
 }

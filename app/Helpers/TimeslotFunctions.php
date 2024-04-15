@@ -27,26 +27,82 @@ class TimeslotFunctions
         };
     }
 
-    public static function getNextTimeslot($timeslots): mixed
+    public static function getNextTimeslot($student): mixed
     {
+        $timeslots = $student->degree->modules->flatMap->timeslots;
+        $module_year = $student->degree->graduation_year - date("Y");
+
         // Get current day of the week and time
         $current_day = date('N');
         $current_time = date('H:i');
 
         // Find the next timeslot
         $next_timeslot = null;
-        foreach ($timeslots as $slot) {
-            if ($slot->day_of_week == $current_day && $slot->start_time > $current_time) {
-                $next_timeslot = $slot;
-                break;
-            } elseif ($slot->day_of_week > $current_day) {
-                $next_timeslot = $slot;
-                break;
-            } elseif ($slot["day_of_week"] < $current_day) {
-                if ($next_timeslot === null || $slot["day_of_week"] > $next_timeslot["day_of_week"]) {
-                    $next_timeslot = $slot;
+//        foreach ($timeslots as $slot) {
+//
+//            if ($slot->day_of_week == $current_day && $slot->start_time > $current_time) {
+//                $next_timeslot = $slot;
+//                break;
+//            } elseif ($slot->day_of_week > $current_day) {
+//                $next_timeslot = $slot;
+//                break;
+//            } elseif ($slot["day_of_week"] < $current_day) {
+//                if ($next_timeslot === null || $slot["day_of_week"] > $next_timeslot["day_of_week"]) {
+//                    $next_timeslot = $slot;
+//                }
+//            }
+//        }
+
+        switch ($module_year) {
+            case 0:
+                foreach ($timeslots as $slot) {
+                    if (substr($slot->module_id, 0, 1) == 3) {
+                        if ($slot->day_of_week == $current_day && $slot->start_time > $current_time) {
+                            $next_timeslot = $slot;
+                            break;
+                        } elseif ($slot->day_of_week > $current_day) {
+                            $next_timeslot = $slot;
+                            break;
+                        } elseif ($slot["day_of_week"] < $current_day) {
+                            if ($next_timeslot === null || $slot["day_of_week"] > $next_timeslot["day_of_week"]) {
+                                $next_timeslot = $slot;
+                            }
+                        }
+                    }
                 }
-            }
+                break;
+            case 1:
+                foreach ($timeslots as $slot) {
+                    if (substr($slot->module_id, 0, 1) == 2) {
+                        if ($slot->day_of_week == $current_day && $slot->start_time > $current_time) {
+                            $next_timeslot = $slot;
+                            break;
+                        } elseif ($slot->day_of_week > $current_day) {
+                            $next_timeslot = $slot;
+                            break;
+                        } elseif ($slot["day_of_week"] < $current_day) {
+                            if ($next_timeslot === null || $slot["day_of_week"] > $next_timeslot["day_of_week"]) {
+                                $next_timeslot = $slot;
+                            }
+                        }
+                    }
+                }
+                break;
+            case 2:
+                foreach ($timeslots as $slot) {
+                    if (substr($slot->module_id, 0, 1) == 1) {
+                        if ($slot->day_of_week == $current_day && $slot->start_time > $current_time) {
+                            $next_timeslot = $slot;
+                        } elseif ($slot->day_of_week > $current_day) {
+                            $next_timeslot = $slot;
+                        } elseif ($slot["day_of_week"] < $current_day) {
+                            if ($next_timeslot === null || $slot["day_of_week"] > $next_timeslot["day_of_week"]) {
+                                $next_timeslot = $slot;
+                            }
+                        }
+                    }
+                }
+                break;
         }
 
         return $next_timeslot;

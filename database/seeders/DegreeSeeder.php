@@ -34,7 +34,7 @@ class DegreeSeeder extends Seeder
             'graduation_year' => 2024
         ]);
         Degree::factory()->create([
-            'code' => 'G401',
+            'code' => 'G701',
             'friendly_name' => 'Computing',
             'graduation_year' => 2024
         ]);
@@ -64,7 +64,7 @@ class DegreeSeeder extends Seeder
             'graduation_year' => 2024
         ]);
         Degree::factory()->create([
-            'code' => 'I1I4',
+            'code' => 'I1I7',
             'friendly_name' => 'Computer Science & Artificial Intelligence',
             'graduation_year' => 2024
         ]);
@@ -84,7 +84,7 @@ class DegreeSeeder extends Seeder
             'graduation_year' => 2024
         ]);
         Degree::factory()->create([
-            'code' => 'W4D7',
+            'code' => 'W7D7',
             'friendly_name' => 'Web Design and Development',
             'graduation_year' => 2024
         ]);
