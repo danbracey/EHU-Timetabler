@@ -19,6 +19,7 @@ class HomeController extends Controller
     {
         if ($request->student_id) {
             $events = [];
+            $classesToday = [];
             $student = Student::where('id', '=', $request->student_id)->first();
             if (!$student) {
                 return view('welcome')->withErrors(['Unable to find student!']);
@@ -26,29 +27,30 @@ class HomeController extends Controller
 
             /** Prepare student's timetable into FullCalendar.io compatible array */
             foreach ($student->degree->modules as $module) {
-                if (substr($module->id, 0, 1) === $student->degree->graduation_year - date("Y")) {
-                    foreach ($module->timeslots as $timeslot) {
-                        $events[] = [
-                            'id' => $timeslot->id,
-                            'title' => "CIS" . $timeslot->module_id . " (Rm: " . $timeslot->room_id . ")",
-                            'startTime' => $timeslot->start_time,
-                            'endTime' => $timeslot->end_time,
-                            'daysOfWeek' => [$timeslot->day_of_week],
-                            'allDay' => false,
-                        ];
-                    }
-                }
-            }
+                $module_year = $student->degree->graduation_year - date("Y");
 
-            $classesToday = [];
-            /** Show student's classes for the day */
-            foreach ($student->degree->modules as $module) {
-                if (substr($module->id, 0, 1) === $student->degree->graduation_year - date("Y")) {
-                    foreach ($module->timeslots as $timeslot) {
-                        if ($timeslot->day_of_week == date('N')) {
-                            $classesToday[] = $timeslot;
+                switch ($module_year) {
+                    case 0:
+                        foreach ($module->timeslots as $timeslot) {
+                            if ((int) substr($module->id, 0, 1) === 3) {
+                                $this->handleTimeslot($timeslot, $classesToday, $events);
+                            }
                         }
-                    }
+                        break;
+                    case 1:
+                        foreach ($module->timeslots as $timeslot) {
+                            if (substr($module->id, 0, 1) == 2) {
+                                $this->handleTimeslot($timeslot, $classesToday, $events);
+                            }
+                        }
+                        break;
+                    case 2:
+                        foreach ($module->timeslots as $timeslot) {
+                            if (substr($module->id, 0, 1) == 1) {
+                                $this->handleTimeslot($timeslot, $classesToday, $events);
+                            }
+                        }
+                        break;
                 }
             }
 
@@ -82,5 +84,21 @@ class HomeController extends Controller
         return view('dashboard', [
             'timeslots' => $events,
         ]);
+    }
+
+    private function handleTimeslot($timeslot, &$classesToday, &$events): void
+    {
+        if ($timeslot->day_of_week == date('N')) {
+            $classesToday[] = $timeslot;
+        }
+
+        $events[] = [
+            'id' => $timeslot->id,
+            'title' => "CIS" . $timeslot->module_id . " (Rm: " . $timeslot->room_id . ")",
+            'startTime' => $timeslot->start_time,
+            'endTime' => $timeslot->end_time,
+            'daysOfWeek' => [$timeslot->day_of_week],
+            'allDay' => false,
+        ];
     }
 }

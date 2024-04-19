@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Jobs\GenerateTimetable;
 use App\Models\Room;
 use App\Models\Student;
 use App\Models\User;
@@ -34,7 +35,10 @@ class DatabaseSeeder extends Seeder
             DegreeModuleSeeder::class,
             BuildingSeeder::class,
             RoomSeeder::class,
-//            StudentSeeder::class /** Uncomment if running locally */
+            StudentSeeder::class,
+
+            //Run timetable generation script
+            TimeslotSeeder::class
         ]);
     }
 }

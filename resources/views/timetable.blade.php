@@ -9,11 +9,11 @@
             <aside class="grid grid-flow-row-dense grid-cols-4 items-center border border-solid border-black mt-16 ">
                 Today:
                 <div class="flex flex-col justify-items-center">
-                    <span class="text-5xl font-extrabold">{{count($classesToday)}}</span><span>Classes</span>
+                    <span class="text-5xl font-extrabold">{{count($classesToday)}}</span><span>Class{{count($classesToday) > 1 ? 'es' : ''}}</span>
                 </div>
                 <div class="col-span-2">
-                    <h3>Next class on {{\App\Helpers\TimeslotFunctions::parseDay(\App\Helpers\TimeslotFunctions::getNextTimeslot($Student->degree->modules->flatMap->timeslots)->day_of_week ?? 0)}}:</h3>
-                    <x-timetabled-class :timeslot="\App\Helpers\TimeslotFunctions::getNextTimeslot($Student->degree->modules->flatMap->timeslots)"></x-timetabled-class>
+                    <h3>Next class on {{\App\Helpers\TimeslotFunctions::parseDay(\App\Helpers\TimeslotFunctions::getNextTimeslot($Student)->day_of_week ?? 0)}}:</h3>
+                    <x-timetabled-class :timeslot="\App\Helpers\TimeslotFunctions::getNextTimeslot($Student)"></x-timetabled-class>
                 </div>
             </aside>
             <article class="border border-solid border-black my-5 pb-5 px-5">
