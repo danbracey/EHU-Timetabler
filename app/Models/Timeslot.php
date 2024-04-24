@@ -14,10 +14,19 @@ class Timeslot extends Model
 
     protected $table = 'module_timeslot';
 
+    /**
+     * Return a relationship instance with associated Module for this Timeslot
+     * @return BelongsTo
+     */
     public function module(): BelongsTo
     {
         return $this->belongsTo(Module::class, 'id');
     }
+
+    /**
+     * Return a relationship instance with associated Room for this Timeslot
+     * @return BelongsTo
+     */
     public function room(): BelongsTo
     {
         return $this->belongsTo(Building::class, 'id', 'room_id');

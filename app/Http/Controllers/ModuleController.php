@@ -15,7 +15,7 @@ use Illuminate\View\View;
 class ModuleController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the module.
      */
     public function index(): View
     {
@@ -25,7 +25,7 @@ class ModuleController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new module.
      */
     public function create(): View
     {
@@ -35,7 +35,7 @@ class ModuleController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created module.
      */
     public function store(ModuleRequest $request): RedirectResponse
     {
@@ -58,7 +58,7 @@ class ModuleController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified module.
      */
     public function show(Module $module): View
     {
@@ -81,7 +81,7 @@ class ModuleController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified module.
      */
     public function edit(string $id)
     {
@@ -92,7 +92,7 @@ class ModuleController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified module.
      */
     public function update(ModuleRequest $request, string $id)
     {
@@ -116,12 +116,12 @@ class ModuleController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified module.
      */
     public function destroy(string $id)
     {
         $module = Module::find($id);
-        $module->degrees()->detach();
+        $module->degrees()->detach(); //Detach any associated degrees, but don't destroy the degree itself / no cascade
         $module->delete();
         return redirect(route('module.index'));
     }

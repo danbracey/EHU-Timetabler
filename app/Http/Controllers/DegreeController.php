@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 class DegreeController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the degree.
      */
     public function index(): View
     {
@@ -22,7 +22,7 @@ class DegreeController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new degree.
      */
     public function create(): View
     {
@@ -32,7 +32,7 @@ class DegreeController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created degree.
      */
     public function store(DegreeRequest $request): RedirectResponse
     {
@@ -49,7 +49,7 @@ class DegreeController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified degree.
      */
     public function show(string $id): View
     {
@@ -59,7 +59,7 @@ class DegreeController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified degree.
      */
     public function edit(string $id): View
     {
@@ -70,7 +70,7 @@ class DegreeController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified degree.
      */
     public function update(DegreeRequest $request, string $id): RedirectResponse
     {
@@ -87,7 +87,7 @@ class DegreeController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete the specified degree.
      */
     public function destroy(string $id): RedirectResponse
     {
@@ -95,7 +95,5 @@ class DegreeController extends Controller
         $degree->modules()->detach();
         $degree->delete();
         return redirect(route('degree.index'));
-
-        //TODO: Call service to automatically regen timetable
     }
 }

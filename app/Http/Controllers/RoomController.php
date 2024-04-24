@@ -17,7 +17,7 @@ class RoomController extends Controller
     // No index for rooms
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new room.
      */
     public function create(Building $building): View
     {
@@ -27,7 +27,7 @@ class RoomController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created room.
      */
     public function store(Building $building, RoomRequest $request): RedirectResponse
     {
@@ -37,7 +37,7 @@ class RoomController extends Controller
         $room->setAttribute('id', $validated['id']);
         $room->setAttribute('available_seats', $validated['available_seats']);
         $room->setAttribute('available_computers', $validated['available_computers']);
-        $room->setAttribute('is_lecture_hall', $validated['is_lecture_hall'] ?? false);
+        $room->setAttribute('is_lecture_hall', $validated['is_lecture_hall'] ?? false); //No data? default to false.
         $room->setAttribute('building', $building->__get('id'));
         $room->save();
 
@@ -45,7 +45,7 @@ class RoomController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified room.
      */
     public function show(Building $building, Room $room): \Illuminate\View\View
     {
@@ -64,12 +64,12 @@ class RoomController extends Controller
         return view('estates.room.show', [
             'Building' => $building,
             'Room' => $room,
-            'timeslots' => $events
+            'timeslots' => $events //Build timetable for room and pass through
         ]);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified room.
      */
     public function edit(Building $building, Room $room): View
     {
@@ -81,7 +81,7 @@ class RoomController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified room.
      */
     public function update(RoomRequest $request, Building $building, Room $room): RedirectResponse
     {
@@ -110,7 +110,7 @@ class RoomController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified room.
      */
     public function destroy(Building $building, Room $room): RedirectResponse
     {

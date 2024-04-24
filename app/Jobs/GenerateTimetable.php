@@ -42,9 +42,12 @@ class GenerateTimetable implements ShouldQueue
         //Truncate all timetabling information and start afresh
         Timeslot::truncate();
 
+        //Loop through each degree
         foreach ($degrees as $degree) {
+            //Get all modules for this degree...
             $modules = $degree->modules;
 
+            //... and loop through them
             foreach ($modules as $module) {
                 //Check if module has been fully assigned timeslots
                 $module_timeslots = Timeslot::where('module_id', '=', $module->id);
@@ -58,8 +61,6 @@ class GenerateTimetable implements ShouldQueue
                     for ($i = 0; $i < $module->seminars_per_week; $i++) {
                         $this->assignTimeslot($module, false, $degree);
                     }
-                } else {
-                    dd("got here");
                 }
             }
         }

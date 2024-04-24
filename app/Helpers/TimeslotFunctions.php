@@ -29,7 +29,9 @@ class TimeslotFunctions
 
     public static function getNextTimeslot($student): mixed
     {
+        //By using flatMap there is no need to loop through modules to reach timeslots
         $timeslots = $student->degree->modules->flatMap->timeslots;
+        //Get how many years the student is away from graduating
         $module_year = $student->degree->graduation_year - date("Y");
 
         // Get current day of the week and time
@@ -57,16 +59,20 @@ class TimeslotFunctions
             case 0:
                 foreach ($timeslots as $slot) {
                     if (substr($slot->module_id, 0, 1) == 3) {
+                        //Check if next timeslot is today and hasn't passed yet
                         if ($slot->day_of_week == $current_day && $slot->start_time > $current_time) {
                             $next_timeslot = $slot;
                             break;
+                        //Failing that, check if the next timeslot is later in the week
                         } elseif ($slot->day_of_week > $current_day) {
                             $next_timeslot = $slot;
                             break;
+                        //Failing that, try next week.
                         } elseif ($slot["day_of_week"] < $current_day) {
                             if ($next_timeslot === null || $slot["day_of_week"] > $next_timeslot["day_of_week"]) {
                                 $next_timeslot = $slot;
                             }
+                            break;
                         }
                     }
                 }
@@ -84,6 +90,7 @@ class TimeslotFunctions
                             if ($next_timeslot === null || $slot["day_of_week"] > $next_timeslot["day_of_week"]) {
                                 $next_timeslot = $slot;
                             }
+                            break;
                         }
                     }
                 }
@@ -93,12 +100,15 @@ class TimeslotFunctions
                     if (substr($slot->module_id, 0, 1) == 1) {
                         if ($slot->day_of_week == $current_day && $slot->start_time > $current_time) {
                             $next_timeslot = $slot;
+                            break;
                         } elseif ($slot->day_of_week > $current_day) {
                             $next_timeslot = $slot;
+                            break;
                         } elseif ($slot["day_of_week"] < $current_day) {
                             if ($next_timeslot === null || $slot["day_of_week"] > $next_timeslot["day_of_week"]) {
                                 $next_timeslot = $slot;
                             }
+                            break;
                         }
                     }
                 }
@@ -120,6 +130,12 @@ class TimeslotFunctions
 //                    ->orWhere('start_time', '>=', $validated['end_time']);
 //            })
 //            ->count();
+
+        /**
+         * Timeslot clashing:
+         * Where room AND day of week AND (start time and end time coincide.)
+         * OR where clashes with module exist.
+         */
         return Timeslot::where('room_id', '=', $validated['room_id'])
             ->where('day_of_week', '=', $validated['day_of_week'])
             ->where(function ($query) use ($validated) {
@@ -133,6 +149,7 @@ class TimeslotFunctions
     public static function generateTimetable(): RedirectResponse
     {
         try {
+            //Dispatch Laravel job for generating the timetable
             GenerateTimetable::dispatch();
             return redirect(route('dashboard'));
         } catch (\Exception $exception) {

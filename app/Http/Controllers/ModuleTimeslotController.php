@@ -15,7 +15,7 @@ use Illuminate\View\View;
 class ModuleTimeslotController extends Controller
 {
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new timeslot.
      */
     public function create(Module $module): View
     {
@@ -26,7 +26,7 @@ class ModuleTimeslotController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created timeslot in storage.
      * @throws ValidationException
      */
     public function store(Module $module, TimeslotRequest $request): RedirectResponse
@@ -36,7 +36,7 @@ class ModuleTimeslotController extends Controller
 
         if ($conflict->isNotEmpty()) {
             throw ValidationException::withMessages(
-                ['clashes' => $conflict]
+                ['clashes' => $conflict] //Return clash information to user
             );
         }
 
@@ -48,7 +48,7 @@ class ModuleTimeslotController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified timeslot.
      */
     public function edit(Module $module, Timeslot $timeslot): View
     {
@@ -60,7 +60,7 @@ class ModuleTimeslotController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified timeslot.
      */
     public function update(TimeslotRequest $request, Module $module, Timeslot $timeslot): RedirectResponse
     {
@@ -73,7 +73,7 @@ class ModuleTimeslotController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified timeslot from storage.
      */
     public function destroy(Module $module, Timeslot $timeslot): RedirectResponse
     {

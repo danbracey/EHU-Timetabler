@@ -11,6 +11,7 @@ class Student extends Model
 {
     use HasFactory;
 
+    //Disable Auto Incrementing due to student ID being set by the Uni
     public $incrementing = false;
 
     private int $id;
@@ -18,6 +19,10 @@ class Student extends Model
     private string $last_name;
     private string $degree_id;
 
+    /**
+     * Return a relationship instance with associated Degree for this Student
+     * @return HasOne
+     */
     public function degree(): HasOne
     {
         return $this->hasOne(Degree::class, 'id', 'degree_id');

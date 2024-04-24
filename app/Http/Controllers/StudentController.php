@@ -14,7 +14,7 @@ use Illuminate\View\View;
 class StudentController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the student.
      */
     public function index(): View
     {
@@ -24,7 +24,7 @@ class StudentController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new student.
      */
     public function create(): View
     {
@@ -34,7 +34,7 @@ class StudentController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created student.
      */
     public function store(StudentRequest $request): RedirectResponse
     {
@@ -51,7 +51,7 @@ class StudentController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified student.
      */
     public function show(string $id): View
     {
@@ -61,7 +61,7 @@ class StudentController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified student.
      */
     public function edit(string $id): View
     {
@@ -72,7 +72,7 @@ class StudentController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified student.
      */
     public function update(StudentRequest $request, string $id): RedirectResponse
     {
@@ -95,7 +95,7 @@ class StudentController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified student.
      */
     public function destroy(string $id): RedirectResponse
     {

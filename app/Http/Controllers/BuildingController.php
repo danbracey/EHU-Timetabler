@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 class BuildingController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display all buildings
      */
     public function index(): View
     {
@@ -22,7 +22,7 @@ class BuildingController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new building.
      */
     public function create(): View
     {
@@ -30,7 +30,7 @@ class BuildingController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created building in storage.
      */
     public function store(BuildingRequest $request): RedirectResponse
     {
@@ -44,7 +44,7 @@ class BuildingController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified building.
      */
     public function show(string $id): View
     {
@@ -54,7 +54,7 @@ class BuildingController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified building.
      */
     public function edit(string $id): View
     {
@@ -64,7 +64,7 @@ class BuildingController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified building
      */
     public function update(BuildingRequest $request, string $id): RedirectResponse
     {
@@ -78,7 +78,7 @@ class BuildingController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete the specified building
      */
     public function destroy(string $id): RedirectResponse
     {

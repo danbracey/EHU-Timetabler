@@ -12,6 +12,10 @@ class Building extends Model
 
     private int $id;
 
+    /**
+     * Return a relationship instance with associated rooms for this Building
+     * @return HasMany
+     */
     public function rooms(): HasMany
     {
         return $this->hasMany(Room::class, 'building', 'id');
