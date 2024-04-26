@@ -19,6 +19,11 @@ Clone the repository from GitHub
 git clone https://github.com/danbracey/EHU-Timetabler.git
 ```
 
+Change directory to the project
+```
+cd EHU-Timetabler
+```
+
 Install composer
 ```
 composer install
@@ -45,6 +50,13 @@ php artisan migrate:fresh --seed
 ```
 
 >Warning - Skipping this step WILL cause a 500 error due to missing sqlite file.
+
+Set an application encryption key
+```
+php artisan key:generate
+```
+
+>Warning - Skipping this step WILL cause a 500 error due to missing application encryption key.
 
 Serve the application
 ```
