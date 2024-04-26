@@ -7,6 +7,13 @@
 ## About EHU Timetabler
 EHU Timetabler is a final year student project, aimed at automatic generation of the student timetable that allows students to view their timetable at a glance by entering their Student ID. 
 
+##Login details
+To login, please click on the 'Log in' text in the top right of the navigation bar, and use the following details:
+- Username: 24969761@edgehill.ac.uk
+- Password: password
+
+Should there be an issue building this project, please see the YouTube (Link contained within Report links section) or the MP4 saved within the V: drive, entitled 'Project Proof Video'.
+
 ## Building the project
 ### Pre-requisites
 - PHP
